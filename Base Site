@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Engineering & Artistry Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --forest: #2d3a3a;
+            --slate: #f8f9fa;
+            --accent: #7a8d84;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+            background-color: #ffffff;
+            color: #333;
+        }
+        h1, h2, h3, .serif {
+            font-family: 'Playfair Display', serif;
+        }
+        .hero-gradient {
+            background: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8)), url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&q=80&w=2000');
+            background-size: cover;
+            background-position: center;
+        }
+        .project-card:hover .overlay {
+            opacity: 1;
+        }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .media-container {
+            aspect-ratio: 16 / 9;
+            background: #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="text-xl font-bold tracking-tighter serif">PORTFOLIO.</div>
+            <div class="hidden md:flex space-x-8 text-sm uppercase tracking-widest text-gray-500">
+                <a href="#about" class="nav-link hover:text-black transition">About</a>
+                <a href="#engineering" class="nav-link hover:text-black transition">Engineering</a>
+                <a href="#photography" class="nav-link hover:text-black transition">Artistry</a>
+                <a href="#experience" class="nav-link hover:text-black transition">Experience</a>
+                <a href="#contact" class="nav-link hover:text-black transition border-b-2 border-black text-black">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero-gradient min-h-screen flex items-center justify-center pt-20">
+        <div class="max-w-4xl px-6 text-center">
+            <span class="text-xs uppercase tracking-[0.3em] text-gray-500 mb-4 block">Biomedical & Mechanical Engineer</span>
+            <h1 class="text-5xl md:text-7xl mb-8 leading-tight">Designing at the intersection of <span class="italic text-gray-600">nature</span> and <span class="italic text-gray-600">precision</span>.</h1>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed font-light">
+                Exploring the mechanics of life through engineering while capturing the beauty of the world through a lens. Dedicated to sustainable design and human-centric medical innovation.
+            </p>
+            <div class="mt-12 flex justify-center space-x-6">
+                <a href="#engineering" class="px-8 py-3 bg-[#2d3a3a] text-white text-sm tracking-widest uppercase hover:bg-black transition rounded-sm">View Work</a>
+                <a href="#photography" class="px-8 py-3 border border-gray-300 text-sm tracking-widest uppercase hover:border-black transition rounded-sm">Photography</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
+            <div class="rounded-lg overflow-hidden shadow-2xl">
+                <!-- Replace with your professional photo -->
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800" alt="Profile" class="w-full grayscale hover:grayscale-0 transition duration-700">
+            </div>
+            <div>
+                <h2 class="text-4xl mb-6">The Philosophy</h2>
+                <p class="text-gray-600 leading-relaxed mb-6 font-light">
+                    My background in mechanical engineering provided me the tools to build, but my passion for biomedical applications gave those tools a purpose. I believe that the most efficient designs are often inspired by biological systems—a concept I explore both in the lab and during my time spent outdoors.
+                </p>
+                <div class="grid grid-cols-2 gap-8 mt-10">
+                    <div>
+                        <h4 class="font-bold text-xs uppercase tracking-widest mb-2">Primary Skills</h4>
+                        <ul class="text-sm text-gray-500 space-y-1">
+                            <li>CAD/SolidWorks</li>
+                            <li>Finite Element Analysis</li>
+                            <li>Biocompatible Materials</li>
+                            <li>Rapid Prototyping</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-xs uppercase tracking-widest mb-2">Creative Focus</h4>
+                        <ul class="text-sm text-gray-500 space-y-1">
+                            <li>Product Photography</li>
+                            <li>Cinematography</li>
+                            <li>Technical Writing</li>
+                            <li>Visual Storytelling</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Engineering Projects -->
+    <section id="engineering" class="py-24 bg-[#f8f9fa]">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16">
+                <div>
+                    <h2 class="text-4xl mb-4">Engineering Projects</h2>
+                    <p class="text-gray-500 font-light">Technical solutions for complex biological problems.</p>
+                </div>
+                <div class="mt-4 md:mt-0 text-xs font-bold tracking-[0.2em] text-gray-400">01 / PROJECTS</div>
+            </div>
+
+            <div class="space-y-32">
+                <!-- Project 1: Video/Large Media Focus -->
+                <div class="grid lg:grid-cols-12 gap-12 items-start">
+                    <div class="lg:col-span-7">
+                        <div class="media-container shadow-xl group cursor-pointer relative">
+                            <!-- Placeholder for a video or high-res image -->
+                            <div class="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition duration-500"></div>
+                            <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1200" class="w-full h-full object-cover" alt="Biomedical Device">
+                            <div class="absolute bottom-6 left-6 text-white opacity-0 group-hover:opacity-100 transition duration-300">
+                                <span class="bg-black/50 px-4 py-2 text-xs rounded-full backdrop-blur">▶ Watch Demo Video</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lg:col-span-5">
+                        <span class="text-xs font-bold text-emerald-700 tracking-tighter mb-2 block">Mechanical Design / Bio-sensing</span>
+                        <h3 class="text-3xl mb-4">Prosthetic Haptic Interface</h3>
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            Developed a low-cost, high-fidelity tactile feedback system for trans-radial amputees using SMA (Shape Memory Alloy) actuators. This project involved deep integration of sensor arrays and custom PCB design.
+                        </p>
+                        <div class="bg-white p-6 border-l-4 border-emerald-800 shadow-sm">
+                            <h5 class="text-xs uppercase font-bold mb-3">Technical Highlights</h5>
+                            <ul class="text-sm text-gray-500 space-y-2">
+                                <li>• Reduced latency by 40% compared to previous iterations.</li>
+                                <li>• Utilized medical-grade silicone for interface comfort.</li>
+                                <li>• Modeled stress distribution via Ansys FEA.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="grid lg:grid-cols-12 gap-12 items-start flex-row-reverse">
+                    <div class="lg:col-span-5 lg:order-2">
+                        <div class="media-container shadow-xl">
+                            <img src="https://images.unsplash.com/photo-1537462715879-360eeb61a0ad?auto=format&fit=crop&q=80&w=1200" class="w-full h-full object-cover" alt="Mechanical Engineering">
+                        </div>
+                    </div>
+                    <div class="lg:col-span-7 lg:order-1">
+                        <span class="text-xs font-bold text-blue-700 tracking-tighter mb-2 block">Fluid Dynamics / Computational Modeling</span>
+                        <h3 class="text-3xl mb-4">Vascular Flow Simulation</h3>
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            A computational study on non-Newtonian fluid flow through bifurcated arterial geometries with varying degrees of stenosis.
+                        </p>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <img src="https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&q=80&w=600" class="rounded shadow" alt="Detail View 1">
+                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=600" class="rounded shadow" alt="Detail View 2">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Artistry & Photography -->
+    <section id="photography" class="py-24 bg-white overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl mb-4">Artistry & The Outdoors</h2>
+                <p class="text-gray-500 font-light max-w-xl mx-auto italic">"In every walk with nature, one receives far more than he seeks." — John Muir</p>
+            </div>
+
+            <div class="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
+                <div class="relative group cursor-crosshair">
+                    <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=800" class="w-full rounded" alt="Mountain range">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white">
+                        <span class="text-xs tracking-widest uppercase">The Alps, 2023</span>
+                    </div>
+                </div>
+                <div class="relative group cursor-crosshair">
+                    <img src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&q=80&w=800" class="w-full rounded" alt="Forest path">
+                </div>
+                <div class="relative group cursor-crosshair">
+                    <img src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&q=80&w=800" class="w-full rounded" alt="Landscape">
+                </div>
+                <div class="relative group cursor-crosshair">
+                    <img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?auto=format&fit=crop&q=80&w=800" class="w-full rounded" alt="Valley">
+                </div>
+                <div class="relative group cursor-crosshair">
+                    <img src="https://images.unsplash.com/photo-1542224566-6e85f2e6772f?auto=format&fit=crop&q=80&w=800" class="w-full rounded" alt="Peaks">
+                </div>
+                <div class="relative group cursor-crosshair">
+                    <img src="https://images.unsplash.com/photo-1493246507139-91e8bef99c02?auto=format&fit=crop&q=80&w=800" class="w-full rounded" alt="Lake">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Timeline -->
+    <section id="experience" class="py-24 bg-[#2d3a3a] text-white">
+        <div class="max-w-4xl mx-auto px-6">
+            <h2 class="text-4xl mb-16 text-center">Journey & Growth</h2>
+            
+            <div class="space-y-12 border-l border-white/20 pl-8 ml-4">
+                <div class="relative">
+                    <div class="absolute -left-[41px] top-1 w-4 h-4 rounded-full bg-white"></div>
+                    <span class="text-xs font-bold text-gray-400 mb-1 block tracking-widest">2023 — PRESENT</span>
+                    <h3 class="text-xl font-bold mb-2">Senior R&D Engineer</h3>
+                    <p class="text-gray-400 text-sm italic mb-3">BioMech Solutions Inc.</p>
+                    <p class="text-gray-300 font-light leading-relaxed">
+                        Leading a team of five in the development of orthopedic implants using titanium additive manufacturing.
+                    </p>
+                </div>
+
+                <div class="relative">
+                    <div class="absolute -left-[41px] top-1 w-4 h-4 rounded-full bg-white/40"></div>
+                    <span class="text-xs font-bold text-gray-400 mb-1 block tracking-widest">2021 — 2023</span>
+                    <h3 class="text-xl font-bold mb-2">Mechanical Design Intern</h3>
+                    <p class="text-gray-400 text-sm italic mb-3">Precision Dynamics Lab</p>
+                    <p class="text-gray-300 font-light leading-relaxed">
+                        Assisted in the prototyping of wearable fitness trackers, specializing in thermal management for ultra-thin enclosures.
+                    </p>
+                </div>
+
+                <div class="relative">
+                    <div class="absolute -left-[41px] top-1 w-4 h-4 rounded-full bg-white/20"></div>
+                    <span class="text-xs font-bold text-gray-400 mb-1 block tracking-widest">2017 — 2021</span>
+                    <h3 class="text-xl font-bold mb-2">B.S. Biomedical Engineering</h3>
+                    <p class="text-gray-400 text-sm italic mb-3">University of Engineering & Design</p>
+                    <p class="text-gray-300 font-light leading-relaxed">
+                        Dual concentration in biomechanics and visual communications. Graduated with Magna Cum Laude honors.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <h2 class="text-4xl mb-6">Let's build something <span class="italic">human</span>.</h2>
+            <p class="text-gray-500 mb-12 max-w-lg mx-auto">Available for collaborations on medical tech, industrial design, or outdoor photography projects.</p>
+            
+            <div class="inline-flex flex-col items-center">
+                <a href="mailto:hello@example.com" class="text-2xl md:text-4xl font-light hover:text-[#7a8d84] transition break-all">
+                    engineer.artist@portfolio.com
+                </a>
+                <div class="flex space-x-6 mt-12 text-gray-400 uppercase text-xs tracking-widest font-bold">
+                    <a href="#" class="hover:text-black transition">LinkedIn</a>
+                    <a href="#" class="hover:text-black transition">Instagram</a>
+                    <a href="#" class="hover:text-black transition">Behance</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-gray-100 text-center text-[10px] uppercase tracking-[0.4em] text-gray-400">
+        &copy; 2024 Portfolio Template — All Rights Reserved
+    </footer>
+
+</body>
+</html>
