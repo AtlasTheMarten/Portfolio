@@ -46,12 +46,20 @@
             overflow: hidden;
         }
 
-        .video-placeholder::after {
-            content: "\f04b";
-            font-family: "Font Awesome 6 Free";
-            font-weight: 900;
-            font-size: 3rem;
-            color: rgba(59, 130, 246, 0.5);
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: #000;
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
         }
 
         .nav-link {
@@ -75,8 +83,7 @@
                 <a href="#projects" class="nav-link">Projects</a>
                 <a href="#contact" class="nav-link">Contact</a>
             </div>
-            <!-- Updated link to GitHub hosted resume -->
-            <a href="https://AtlasTheMarten.github.io/Portfolio/Ethan Wheeler resume feb 2026.pdf" target="_blank" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-sm transition-all flex items-center gap-2">
+            <a href="https://AtlasTheMarten.github.io/Portfolio/Ethan Wheeler resume feb 2026.pdf" target="_blank" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-sm transition-all flex items-center gap-2 text-white">
                 <i class="fas fa-download"></i> Download Resume
             </a>
         </div>
@@ -101,7 +108,6 @@
             <div class="w-64 h-64 md:w-80 md:h-80 relative group">
                 <div class="absolute inset-0 bg-blue-500 blur-[80px] opacity-20 animate-pulse group-hover:opacity-30 transition-opacity"></div>
                 <div class="relative w-full h-full glass rounded-3xl border border-white/10 flex items-center justify-center overflow-hidden transition-transform group-hover:scale-[1.02]">
-                    <!-- Updated image link to your GitHub hosted profile photo -->
                     <img src="https://AtlasTheMarten.github.io/Portfolio/photo_2026-02-18_11-21-31.jpg" 
                          alt="Ethan Wheeler" 
                          class="w-full h-full object-cover"
@@ -122,7 +128,6 @@
             </h2>
             
             <div class="space-y-12 border-l-2 border-slate-800 ml-4 pl-8">
-                <!-- Job 1 -->
                 <div class="relative">
                     <div class="absolute -left-[41px] top-1 w-4 h-4 rounded-full bg-blue-500 ring-4 ring-slate-900"></div>
                     <div>
@@ -130,13 +135,12 @@
                         <p class="text-blue-400 font-medium mb-2">United States Public Health Service - Indian Health Service • May 2025 - Aug 2025</p>
                         <ul class="text-slate-400 space-y-2 list-disc list-outside ml-4">
                             <li>Oversee civil engineering construction projects of medical facilities.</li>
-                            <li>Inspect water treatment systems on reservations, including pumps and storage tanks.</li>
+                            <li>Inspected water treatment systems on Indian reservations, including pumps and storage tanks.</li>
                             <li>Perform environmental audits for the EPA on reservation sites.</li>
                         </ul>
                     </div>
                 </div>
 
-                <!-- Job 2 -->
                 <div class="relative">
                     <div class="absolute -left-[41px] top-1 w-4 h-4 rounded-full bg-slate-700 ring-4 ring-slate-900"></div>
                     <div>
@@ -149,7 +153,6 @@
                     </div>
                 </div>
 
-                <!-- Job 3 -->
                 <div class="relative">
                     <div class="absolute -left-[41px] top-1 w-4 h-4 rounded-full bg-slate-700 ring-4 ring-slate-900"></div>
                     <div>
@@ -162,7 +165,6 @@
                     </div>
                 </div>
 
-                <!-- Job 4 -->
                 <div class="relative">
                     <div class="absolute -left-[41px] top-1 w-4 h-4 rounded-full bg-slate-700 ring-4 ring-slate-900"></div>
                     <div>
@@ -186,13 +188,17 @@
             </h2>
 
             <div class="grid md:grid-cols-2 gap-12">
-                <!-- Project 1 -->
                 <div class="group">
-                    <div class="video-placeholder mb-6 group-hover:scale-[1.02] transition-transform cursor-pointer">
-                        <div class="absolute inset-0 flex items-center justify-center bg-slate-800/50">
-                            <i class="fas fa-robot text-5xl text-blue-500/30"></i>
+                    <div class="video-placeholder mb-6 group-hover:scale-[1.02] transition-transform shadow-xl">
+                        <div class="video-container">
+                            <iframe 
+                                src="https://www.youtube.com/embed/d0QV2A43sAg" 
+                                title="Resumé Arm Demo"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                allowfullscreen>
+                            </iframe>
                         </div>
-                        <span class="absolute bottom-4 right-4 bg-black/60 px-2 py-1 rounded text-xs mono">Oct 2025 - Feb 2026</span>
+                        <span class="absolute bottom-4 right-4 bg-black/60 px-2 py-1 rounded text-xs mono z-10">Oct 2025 - Feb 2026</span>
                     </div>
                     <div class="flex gap-2 mb-3">
                         <span class="px-3 py-1 bg-blue-500/10 text-blue-400 text-xs rounded-full mono">Robotics</span>
@@ -208,11 +214,11 @@
                     </div>
                 </div>
 
-                <!-- Project 2 -->
                 <div class="group">
-                    <div class="video-placeholder mb-6 group-hover:scale-[1.02] transition-transform cursor-pointer overflow-hidden">
-                        <div class="absolute inset-0 flex items-center justify-center bg-slate-800/50">
-                            <i class="fas fa-bicycle text-5xl text-blue-500/30"></i>
+                    <div class="video-placeholder mb-6 group-hover:scale-[1.02] transition-transform overflow-hidden relative">
+                        <div class="absolute inset-0 flex flex-col items-center justify-center bg-slate-800/50">
+                            <i class="fas fa-bicycle text-5xl text-blue-500/30 mb-2"></i>
+                            <p class="text-xs text-slate-500 uppercase tracking-widest mono">Hardware Build</p>
                         </div>
                         <span class="absolute bottom-4 right-4 bg-black/60 px-2 py-1 rounded text-xs mono">Oct 2024 - May 2025</span>
                     </div>
@@ -272,17 +278,18 @@
     </section>
 
     <!-- Footer / Contact -->
-    <footer id="contact" class="py-20 border-t border-white/5">
-        <div class="max-w-4xl mx-auto px-6 text-center">
+    <footer id="contact" class="pt-20 border-t border-white/5 relative flex flex-col items-center">
+        <!-- Text Content -->
+        <div class="max-w-4xl mx-auto px-6 text-center relative z-10 pb-10 md:pb-20">
             <h2 class="text-4xl font-bold mb-6">Get In Touch</h2>
             <p class="text-slate-400 mb-10 text-lg">
                 Currently pursuing B.S. in Biomedical Engineering at UTK. Let's connect about research opportunities or engineering projects!
             </p>
             <div class="flex flex-col md:flex-row justify-center items-center gap-6 mb-12">
-                <a href="mailto:ethan.wheeler000@gmail.com" class="px-10 py-4 border-2 border-blue-500 text-blue-400 font-bold rounded-lg hover:bg-blue-500 hover:text-white transition-all">
+                <a href="mailto:ethan.wheeler000@gmail.com" class="px-10 py-4 border-2 border-blue-500 text-blue-400 font-bold rounded-lg hover:bg-blue-500 hover:text-white transition-all bg-slate-900/50">
                     Email Me
                 </a>
-               <!-- <span class="text-slate-500 mono">+1 865-599-4286</span> -->
+                <span class="text-slate-500 mono">+1 865-599-4286</span>
             </div>
             <div class="flex justify-center space-x-8 text-2xl text-slate-500">
                 <a href="https://www.linkedin.com/in/ethan-wheeler-76612a250/" target="_blank" class="hover:text-blue-500 transition-colors"><i class="fab fa-linkedin"></i></a>
@@ -291,6 +298,13 @@
             <p class="mt-20 text-slate-600 text-sm mono italic">
                 Designed & Built by Ethan Wheeler © 2026
             </p>
+        </div>
+        
+        <!-- Background Banner -->
+        <!-- Adjust the pixel value in transform: translateY(0px) to move it up or down precisely -->
+        <div class="absolute bottom-0 left-0 w-full z-0 pointer-events-none opacity-80 md:opacity-100" 
+             style="transform: translateY(95px);">
+            <img src="https://AtlasTheMarten.github.io/Portfolio/Bottom banner.png" alt="Bottom Banner" class="w-full block">
         </div>
     </footer>
 
