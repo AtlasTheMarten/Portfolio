@@ -69,6 +69,24 @@
         .nav-link:hover {
             color: #3b82f6;
         }
+
+        /* Pulsing status indicator */
+        .status-pulse {
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+            box-shadow: 0 0 0 rgba(16, 185, 129, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
     </style>
 </head>
 <body class="selection:bg-blue-500/30">
@@ -184,9 +202,55 @@
     <section id="projects" class="py-20 px-6">
         <div class="max-w-6xl mx-auto">
             <h2 class="text-3xl font-bold mb-12 flex items-center gap-4">
-                <span class="text-blue-500">02.</span> Personal Projects
+                <span class="text-blue-500">02.</span> Projects
             </h2>
 
+            <!-- Current Featured Project: Axial Flux Motor -->
+            <div class="mb-20">
+                <div class="inline-flex items-center px-3 py-1 rounded-full glass border-blue-500/30 text-xs mono text-blue-400 mb-6 uppercase tracking-widest">
+                    <span class="status-pulse"></span> Currently Working On
+                </div>
+                
+                <div class="glass rounded-3xl overflow-hidden border-white/10 grid lg:grid-cols-5 gap-0">
+                    <div class="lg:col-span-3 h-[300px] lg:h-[450px] relative bg-slate-800">
+                        <!-- Media Placeholder -->
+                        <div class="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-blue-600/20 to-transparent">
+                            <i class="fas fa-fan text-7xl text-blue-500/40 mb-4 animate-[spin_10s_linear_infinite]"></i>
+                            <p class="text-slate-500 mono text-sm uppercase tracking-[0.2em]">High-Torque Power Systems</p>
+                        </div>
+                        <img src="https://AtlasTheMarten.github.io/Portfolio/Axial flux motor cad.png" 
+                             alt="Axial Flux Motor Prototype" 
+                             class="w-full h-full object-cover opacity-50 mix-blend-overlay">
+                    </div>
+                    <div class="lg:col-span-2 p-8 lg:p-12 flex flex-col justify-center">
+                        <h3 class="text-3xl font-bold mb-4 text-white">Axial Flux Motor Prototype</h3>
+                        <p class="text-slate-400 mb-8 leading-relaxed">
+                            Engineering a high-power-density axial flux permanent magnet motor. Unlike radial motors, this design utilizes a "pancake" geometry to maximize torque while minimizing axial footprint, ideal for a strong power to weight ratio.
+                        </p>
+                        <div class="space-y-4 mb-8">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-microchip text-blue-500"></i>
+                                <span class="text-sm text-slate-300">Electromagnetic physics understanding</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-bolt text-blue-500"></i>
+                                <span class="text-sm text-slate-300">CAD design</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-clock text-slate-500"></i>
+                                <span class="text-sm text-slate-400 italic">Winding and testing</span>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-white/5 border border-white/10 text-slate-300 text-[10px] uppercase rounded-md mono">Electrical engineering</span>
+                            <span class="px-3 py-1 bg-white/5 border border-white/10 text-slate-300 text-[10px] uppercase rounded-md mono">Fusion 360</span>
+                            <span class="px-3 py-1 bg-white/5 border border-white/10 text-slate-300 text-[10px] uppercase rounded-md mono">Mechatronics</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Previous Projects Grid -->
             <div class="grid md:grid-cols-2 gap-12">
                 <div class="group">
                     <div class="video-placeholder mb-6 group-hover:scale-[1.02] transition-transform shadow-xl">
@@ -278,9 +342,9 @@
     </section>
 
     <!-- Footer / Contact -->
-    <footer id="contact" class="pt-20 border-t border-white/5 relative flex flex-col items-center">
+    <footer id="contact" class="pt-20 border-t border-white/5 relative flex flex-col items-center overflow-hidden">
         <!-- Text Content -->
-        <div class="max-w-4xl mx-auto px-6 text-center relative z-10 pb-10 md:pb-20">
+        <div class="max-w-4xl mx-auto px-6 text-center relative z-10 pb-10 md:pb-32">
             <h2 class="text-4xl font-bold mb-6">Get In Touch</h2>
             <p class="text-slate-400 mb-10 text-lg">
                 Currently pursuing B.S. in Biomedical Engineering at UTK. Let's connect about research opportunities or engineering projects!
@@ -301,10 +365,9 @@
         </div>
         
         <!-- Background Banner -->
-        <!-- Adjust the pixel value in transform: translateY(0px) to move it up or down precisely -->
         <div class="absolute bottom-0 left-0 w-full z-0 pointer-events-none opacity-80 md:opacity-100" 
              style="transform: translateY(95px);">
-            <!--img src="https://AtlasTheMarten.github.io/Portfolio/Bottom banner.png" alt="Bottom Banner" class="w-full block"-->
+            <img src="https://AtlasTheMarten.github.io/Portfolio/Bottom banner.png" alt="Bottom Banner" class="w-full block">
         </div>
     </footer>
 
