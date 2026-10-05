@@ -207,3 +207,25 @@ h1, h2, h3 { text-wrap: balance; margin: 0; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
   html { scroll-behavior: auto; }
 }
+
+/* ---------- Veils: a soft frosted patch behind loose text so the Dust doesn't fight the words ---------- */
+.hero .wrap > div:first-child, .timeline, .contact .wrap, .detail-hero > div:last-child, .label, .hint, .back {
+  position: relative; isolation: isolate; --veil: 28px;
+}
+.label, .hint, .back { --veil: 14px; }
+.hero .wrap > div:first-child::after, .timeline::after, .contact .wrap::after, .detail-hero > div:last-child::after,
+.label::after, .hint::after, .back::after {
+  content: ""; position: absolute; z-index: -1; pointer-events: none;
+  inset: calc(var(--veil) * -1) calc(var(--veil) * -1.4);
+  background: rgba(13, 31, 51, .62);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  border-radius: 48px;
+  -webkit-mask-image: radial-gradient(closest-side, #000 72%, transparent);
+  mask-image: radial-gradient(closest-side, #000 72%, transparent);
+}
+.label, .hint, .back { display: inline-block; }
+.page { overflow-x: clip; }
+@media (max-width: 760px) {
+  .hero .wrap > div:first-child::after, .timeline::after, .contact .wrap::after, .detail-hero > div:last-child::after,
+  .label::after, .hint::after, .back::after { inset: calc(var(--veil) * -1) -14px; }
+}
