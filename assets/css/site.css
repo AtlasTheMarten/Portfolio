@@ -242,3 +242,5 @@ h1, h2, h3 { text-wrap: balance; margin: 0; }
 .media video, .media iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 .media video { object-fit: contain; background: #000; }
 .gallery a.media.light { background: #fff; }   /* renders on white: fill the frame instead of letterboxing */
+.more-link { display: inline-block; margin-top: 10px; font: 500 13px var(--mono); color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--line); transition: border-color .2s; }
+.more-link:hover { border-color: var(--accent); }
