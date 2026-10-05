@@ -3,384 +3,177 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Engineering Portfolio | Ethan Wheeler</title>
-    <link rel="icon" type="image/png" href="https://AtlasTheMarten.github.io/Portfolio/Atlas (2).png">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
-        
-        :root {
-            --bg-dark: #0f172a;
-            --accent: #3b82f6;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-dark);
-            color: #e2e8f0;
-            scroll-behavior: smooth;
-        }
-
-        .mono { font-family: 'JetBrains Mono', monospace; }
-
-        .glass {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .gradient-text {
-            background: linear-gradient(90deg, #60a5fa, #3b82f6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .video-placeholder {
-            aspect-ratio: 16 / 9;
-            background: linear-gradient(45deg, #1e293b, #0f172a);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 0.75rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .video-container {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            background: #000;
-        }
-        
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .nav-link {
-            transition: all 0.3s ease;
-        }
-
-        .nav-link:hover {
-            color: #3b82f6;
-        }
-
-        /* Pulsing status indicator */
-        .status-pulse {
-            width: 8px;
-            height: 8px;
-            background: #10b981;
-            border-radius: 50%;
-            display: inline-block;
-            margin-right: 8px;
-            box-shadow: 0 0 0 rgba(16, 185, 129, 0.4);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
-        }
-    </style>
+    <title>Ethan Wheeler | Engineering Portfolio</title>
+    <meta name="description" content="Ethan Wheeler, Biomedical Engineering student at UT Knoxville. Robotics, motors, and other things I've built.">
+    <link rel="icon" type="image/png" href="assets/img/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@500&display=swap">
+    <link rel="stylesheet" href="assets/css/site.css">
 </head>
-<body class="selection:bg-blue-500/30">
+<body>
+<div class="page">
 
-    <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 glass border-b border-white/5">
-        <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-            <span class="mono font-bold text-xl tracking-tighter uppercase text-blue-400">Ethan Wheeler</span>
-            <div class="hidden md:flex space-x-8 text-sm font-medium">
-                <a href="#home" class="nav-link">Home</a>
-                <a href="#experience" class="nav-link">Experience</a>
-                <a href="#projects" class="nav-link">Projects</a>
-                <a href="#contact" class="nav-link">Contact</a>
+    <nav class="nav">
+        <div class="wrap">
+            <a class="brand" href="#home">Ethan Wheeler</a>
+            <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-links">Menu</button>
+            <div class="nav-links" id="nav-links">
+                <a href="#projects">Projects</a>
+                <a href="#experience">Experience</a>
+                <a href="#contact">Contact</a>
+                <a class="btn" href="Ethan_Wheeler_Resume_SEP_2026.pdf" target="_blank" rel="noopener">Resume</a>
             </div>
-            <a href="https://AtlasTheMarten.github.io/Portfolio/Ethan_Wheeler_Resume_SEP_2026.pdf" target="_blank" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-sm transition-all flex items-center gap-2 text-white">
-                <i class="fas fa-download"></i> Download Resume
-            </a>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="pt-32 pb-20 px-6">
-        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12">
-            <div class="flex-1 text-center md:text-left">
-                <p class="mono text-blue-400 mb-4 tracking-widest uppercase text-sm">Biomedical Engineering Student</p>
-                <h1 class="text-3xl md:text-5xl font-bold mb-2 text-slate-300">Welcome! My name is</h1>
-                 <h1 class="text-5xl md:text-7xl font-bold mb-6"> <span class="gradient-text">Ethan Wheeler</span></h1>
-                <p class="text-slate-400 text-lg mb-8 max-w-xl leading-relaxed">
-                    I am an engineering student at The University of Tennessee, Knoxville, majoring in Biomedical Engineering with a minor in Neuroscience. I am passionate about robotics, neuroscience, and environmental stewardship. 
-                    I strive for efficient use of resources to create impactful technology that brings people together and forward.
+    <header class="hero" id="home">
+        <div class="wrap">
+            <div>
+                <p class="eyebrow">Biomedical Engineering · UT Knoxville</p>
+                <h1>Hi! I'm <span>Ethan</span>, and I build things.</h1>
+                <p>
+                    I'm an engineering student at The University of Tennessee, Knoxville, majoring in Biomedical Engineering with a minor in Neuroscience.
+                    I'm passionate about robotics, neuroscience, and environmental stewardship, and I try to do a lot with a little:
+                    impactful technology that brings people together and forward.
                 </p>
-                <div class="flex justify-center md:justify-start gap-4">
-                    <a href="#projects" class="px-6 py-3 bg-white text-slate-900 rounded-full font-semibold hover:bg-blue-50 transition-all">View Projects</a>
-                    <a href="https://www.linkedin.com/in/ethan-wheeler-76612a250/" target="_blank" class="px-6 py-3 glass rounded-full font-semibold hover:border-blue-400/50 transition-all">LinkedIn</a>
+                <div class="hero-actions">
+                    <a class="btn" href="#projects">See my projects</a>
+                    <a class="btn ghost" href="https://www.linkedin.com/in/ethan-wheeler-76612a250/" target="_blank" rel="noopener">LinkedIn</a>
                 </div>
             </div>
-            <div class="w-64 h-64 md:w-80 md:h-80 relative group">
-                <div class="absolute inset-0 bg-blue-500 blur-[80px] opacity-20 animate-pulse group-hover:opacity-30 transition-opacity"></div>
-                <div class="relative w-full h-full glass rounded-3xl border border-white/10 flex items-center justify-center overflow-hidden transition-transform group-hover:scale-[1.02]">
-                    <img src="https://AtlasTheMarten.github.io/Portfolio/photo_2026-02-18_11-21-31.jpg" 
-                         alt="Ethan Wheeler" 
-                         class="w-full h-full object-cover"
-                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <div class="hidden w-full h-full items-center justify-center">
-                         <i class="fas fa-user-circle text-9xl text-slate-700"></i>
-                    </div>
-                </div>
-            </div>
+            <img class="headshot" src="assets/img/ethan.jpg" alt="Ethan Wheeler">
         </div>
-    </section>
+    </header>
 
-    <!-- Work Experience -->
-    <section id="experience" class="py-20 bg-slate-900/50">
-        <div class="max-w-4xl mx-auto px-6">
-            <h2 class="text-3xl font-bold mb-12 flex items-center gap-4">
-                <span class="text-blue-500">01.</span> Professional Journey
-            </h2>
-            
-            <div class="space-y-12 border-l-2 border-slate-800 ml-4 pl-8">
-                <div class="relative">
-                    <div class="absolute -left-[41px] top-1 w-4 h-4 rounded-full bg-blue-500 ring-4 ring-slate-900"></div>
-                    <div>
-                        <h3 class="text-xl font-bold text-slate-100">Engineering Intern</h3>
-                        <p class="text-blue-400 font-medium mb-2">United States Public Health Service - Indian Health Service • May 2025 - Aug 2025</p>
-                        <ul class="text-slate-400 space-y-2 list-disc list-outside ml-4">
-                            <li>Oversee civil engineering construction projects of medical facilities.</li>
+    <main>
+        <section id="projects">
+            <div class="wrap">
+                <p class="label">Projects</p>
+                <div class="cards">
+                    <a class="card panel" href="projects/axial-flux-motor.html">
+                        <span class="badge">Currently building</span>
+                        <div class="media"><img src="assets/img/axial-flux-motor-cad.png" alt="CAD render of the axial flux motor" loading="lazy"></div>
+                        <div class="card-body">
+                            <h3>Axial Flux Motor</h3>
+                            <p>A pancake-shaped permanent magnet motor designed for a high power-to-weight ratio.</p>
+                            <ul class="tags"><li>Electromagnetics</li><li>Fusion 360</li><li>Mechatronics</li></ul>
+                            <span class="hand">2026 – now</span>
+                        </div>
+                    </a>
+                    <a class="card panel" href="projects/third-arm.html">
+                        <div class="media"><img src="assets/img/third-arm-cad.png" alt="CAD model of the motion-tracked third arm" loading="lazy"></div>
+                        <div class="card-body">
+                            <h3>Motion-Tracked Third Arm</h3>
+                            <p>A motion-tracked robotic third arm driven by teleoperation, shown here in CAD and simulation.</p>
+                            <ul class="tags"><li>Robotics</li><li>Teleoperation</li><li>Simulation</li></ul>
+                            <span class="hand">2026</span>
+                        </div>
+                    </a>
+                    <a class="card panel" href="projects/resume-arm.html">
+                        <div class="media"><div class="ph"><b aria-hidden="true">📄</b>Photo coming soon</div></div>
+                        <div class="card-body">
+                            <h3>Resumé Arm</h3>
+                            <p>A robotic arm and paper dispenser that hands out my resume, built on a $600 self-funded budget.</p>
+                            <ul class="tags"><li>Robotics</li><li>C++</li><li>3D printing</li></ul>
+                            <span class="hand">Oct 2025 – Feb 2026</span>
+                        </div>
+                    </a>
+                    <a class="card panel" href="projects/ebike.html">
+                        <div class="media"><div class="ph"><b aria-hidden="true">🚲</b>Photo coming soon</div></div>
+                        <div class="card-body">
+                            <h3>Electric Bike Conversions</h3>
+                            <p>Mountain and road bikes converted to electric power, with custom battery packs, on a $250 budget.</p>
+                            <ul class="tags"><li>E-mobility</li><li>Battery design</li></ul>
+                            <span class="hand">Oct 2024 – May 2025</span>
+                        </div>
+                    </a>
+                </div>
+                <p class="hand hint">↖ click a project to see the full story</p>
+            </div>
+        </section>
+
+        <section id="experience">
+            <div class="wrap">
+                <p class="label">Experience</p>
+                <ol class="timeline">
+                    <li>
+                        <h3>Engineering Intern</h3>
+                        <p class="where">United States Public Health Service – Indian Health Service · May 2025 – Aug 2025</p>
+                        <ul>
+                            <li>Oversaw civil engineering construction projects for medical facilities.</li>
                             <li>Inspected water treatment systems on Indian reservations, including pumps and storage tanks.</li>
-                            <li>Perform environmental audits for the EPA on reservation sites.</li>
+                            <li>Performed environmental audits for the EPA on reservation sites.</li>
                         </ul>
-                    </div>
-                </div>
-
-                <div class="relative">
-                    <div class="absolute -left-[41px] top-1 w-4 h-4 rounded-full bg-slate-700 ring-4 ring-slate-900"></div>
-                    <div>
-                        <h3 class="text-xl font-bold text-slate-100">Quality Engineer Intern</h3>
-                        <p class="text-blue-400 font-medium mb-2">Kelvion • Jan 2024 - May 2024</p>
-                        <ul class="text-slate-400 space-y-2 list-disc list-outside ml-4">
+                    </li>
+                    <li>
+                        <h3>Quality Engineer Intern</h3>
+                        <p class="where">Kelvion · Jan 2024 – May 2024</p>
+                        <ul>
                             <li>Inspected heat exchanger manufacturing and tracked supply chain issues.</li>
-                            <li>Assisted in reading complex engineering drawings and shadowing senior engineers.</li>
+                            <li>Read complex engineering drawings and shadowed senior engineers.</li>
                         </ul>
-                    </div>
-                </div>
-
-                <div class="relative">
-                    <div class="absolute -left-[41px] top-1 w-4 h-4 rounded-full bg-slate-700 ring-4 ring-slate-900"></div>
-                    <div>
-                        <h3 class="text-xl font-bold text-slate-100">Research Assistant</h3>
-                        <p class="text-blue-400 font-medium mb-2">Karolinska Institute (Stockholm) • Jan 2024 - May 2024</p>
-                        <ul class="text-slate-400 space-y-2 list-disc list-outside ml-4">
+                    </li>
+                    <li>
+                        <h3>Research Assistant</h3>
+                        <p class="where">Karolinska Institute (Stockholm) · Jan 2024 – May 2024</p>
+                        <ul>
                             <li>Performed immunochemistry fluorescent staining on human brain tissue samples.</li>
                             <li>Analyzed protein expression patterns in specific brain regions.</li>
                         </ul>
-                    </div>
-                </div>
-
-                <div class="relative">
-                    <div class="absolute -left-[41px] top-1 w-4 h-4 rounded-full bg-slate-700 ring-4 ring-slate-900"></div>
-                    <div>
-                        <h3 class="text-xl font-bold text-slate-100">Drone Pilot</h3>
-                        <p class="text-blue-400 font-medium mb-2">UT NIMBios Lab • June 2023 - May 2025</p>
-                        <ul class="text-slate-400 space-y-2 list-disc list-outside ml-4">
-                            <li>Piloted Mavic 2 Enterprise for thermal and visual spatial analysis.</li>
+                    </li>
+                    <li>
+                        <h3>Drone Pilot</h3>
+                        <p class="where">UT NIMBios Lab · June 2023 – May 2025</p>
+                        <ul>
+                            <li>Piloted a Mavic 2 Enterprise for thermal and visual spatial analysis.</li>
                             <li>Managed airworthiness checks and flight data registration.</li>
                         </ul>
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <section id="skills">
+            <div class="wrap">
+                <p class="label">Toolbox</p>
+                <div class="skills">
+                    <div class="panel">
+                        <h3>Technical design</h3>
+                        <ul><li>Fusion 360</li><li>Blender</li><li>Adobe Suite</li><li>DaVinci Resolve</li><li>3D printing</li></ul>
+                    </div>
+                    <div class="panel">
+                        <h3>Engineering</h3>
+                        <ul><li>Drone piloting (Mavic 2E)</li><li>Mechatronics</li><li>Signal analysis</li><li>System dynamics</li><li>Circuit design</li></ul>
+                    </div>
+                    <div class="panel">
+                        <h3>Professional</h3>
+                        <ul><li>Laboratory procedures</li><li>Technical writing</li><li>Immunochemistry</li><li>Environmental audits</li><li>International experience</li></ul>
                     </div>
                 </div>
             </div>
+        </section>
+    </main>
+
+    <footer class="contact" id="contact">
+        <div class="wrap">
+            <h2>Get in touch</h2>
+            <p>I'm pursuing a B.S. in Biomedical Engineering at UTK. Let's talk about research opportunities or engineering projects!</p>
+            <div class="contact-links">
+                <a class="btn" href="mailto:ethan.wheeler000@gmail.com">Email me</a>
+                <a class="btn ghost" href="https://www.linkedin.com/in/ethan-wheeler-76612a250/" target="_blank" rel="noopener">LinkedIn</a>
+                <a class="btn ghost" href="Ethan_Wheeler_Resume_SEP_2026.pdf" target="_blank" rel="noopener">Resume (PDF)</a>
+            </div>
+            <span class="email">ethan.wheeler000@gmail.com</span>
         </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" class="py-20 px-6">
-        <div class="max-w-6xl mx-auto">
-            <h2 class="text-3xl font-bold mb-12 flex items-center gap-4">
-                <span class="text-blue-500">02.</span> Personal Projects
-            </h2>
-
-            <!-- Current Featured Project: Axial Flux Motor -->
-            <div class="mb-20">
-                <div class="inline-flex items-center px-3 py-1 rounded-full glass border-blue-500/30 text-xs mono text-blue-400 mb-6 uppercase tracking-widest">
-                    <span class="status-pulse"></span> Currently Working On
-                </div>
-                
-                <div class="glass rounded-3xl overflow-hidden border-white/10 grid lg:grid-cols-5 gap-0">
-                    <div class="lg:col-span-3 h-[300px] lg:h-[450px] relative bg-slate-800">
-                        <!-- Media Placeholder -->
-                        <div class="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-blue-600/20 to-transparent">
-                            <i class="fas fa-fan text-7xl text-blue-500/40 mb-4 animate-[spin_10s_linear_infinite]"></i>
-                            <p class="text-slate-500 mono text-sm uppercase tracking-[0.2em]">High-Torque Power Systems</p>
-                        </div>
-                        <img src="https://AtlasTheMarten.github.io/Portfolio/Axial flux motor cad.png" 
-                             alt="Axial Flux Motor Prototype" 
-                             class="w-full h-full object-cover opacity-50 mix-blend-overlay">
-                    </div>
-                    <div class="lg:col-span-2 p-8 lg:p-12 flex flex-col justify-center">
-                        <h3 class="text-3xl font-bold mb-4 text-white">Axial Flux Motor Prototype</h3>
-                        <p class="text-slate-400 mb-8 leading-relaxed">
-                            Engineering a high-power-density axial flux permanent magnet motor. Unlike radial motors, this design utilizes a "pancake" geometry to maximize torque while minimizing axial footprint, ideal for a strong power to weight ratio.
-                        </p>
-                        <div class="space-y-4 mb-8">
-                            <div class="flex items-center gap-3">
-                                <i class="fas fa-microchip text-blue-500"></i>
-                                <span class="text-sm text-slate-300">Electromagnetic physics understanding</span>
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <i class="fas fa-bolt text-blue-500"></i>
-                                <span class="text-sm text-slate-300">CAD design</span>
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <i class="fas fa-clock text-slate-500"></i>
-                                <span class="text-sm text-slate-400 italic">Winding and testing</span>
-                            </div>
-                        </div>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 bg-white/5 border border-white/10 text-slate-300 text-[10px] uppercase rounded-md mono">Electrical engineering</span>
-                            <span class="px-3 py-1 bg-white/5 border border-white/10 text-slate-300 text-[10px] uppercase rounded-md mono">Fusion 360</span>
-                            <span class="px-3 py-1 bg-white/5 border border-white/10 text-slate-300 text-[10px] uppercase rounded-md mono">Mechatronics</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Past Projects Divider -->
-            <div class="flex items-center gap-6 mb-16 opacity-50">
-                <div class="h-[1px] flex-1 bg-gradient-to-r from-transparent via-slate-600 to-slate-600"></div>
-                <div class="flex items-center gap-3">
-                    <span class="text-blue-500 font-bold mono text-sm">02.1</span>
-                    <h3 class="text-slate-400 font-bold uppercase tracking-[0.3em] text-xs">Past Projects</h3>
-                </div>
-                <div class="h-[1px] flex-1 bg-gradient-to-l from-transparent via-slate-600 to-slate-600"></div>
-            </div>
-
-            <!-- Previous Projects Grid -->
-            <div class="grid md:grid-cols-2 gap-12">
-                <div class="group">
-                    <div class="video-placeholder mb-6 group-hover:scale-[1.02] transition-transform shadow-xl">
-                        <div class="video-container">
-                            <iframe 
-                                src="https://www.youtube.com/embed/d0QV2A43sAg" 
-                                title="Resumé Arm Demo"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                                allowfullscreen>
-                            </iframe>
-                        </div>
-                        <span class="absolute bottom-4 right-4 bg-black/60 px-2 py-1 rounded text-xs mono z-10">Oct 2025 - Feb 2026</span>
-                    </div>
-                    <div class="flex gap-2 mb-3">
-                        <span class="px-3 py-1 bg-blue-500/10 text-blue-400 text-xs rounded-full mono">Robotics</span>
-                        <span class="px-3 py-1 bg-blue-500/10 text-blue-400 text-xs rounded-full mono">Fusion360</span>
-                        <span class="px-3 py-1 bg-blue-500/10 text-blue-400 text-xs rounded-full mono">3D Printing</span>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-4 group-hover:text-blue-400 transition-colors">Resumé Arm</h3>
-                    <p class="text-slate-400 mb-6 leading-relaxed">
-                        A self-designed machine featuring a robotic arm and paper dispenser. Iteratively designed mechanisms in CAD, wired, and coded the control system, and optimized for a $600 self-funded budget.
-                    </p>
-                    <div class="flex gap-4">
-                        <span class="text-xs text-slate-500 italic">Rapid Prototyping | Mechanical Interfaces | C++</span>
-                    </div>
-                </div>
-
-                <div class="group">
-                    <div class="video-placeholder mb-6 group-hover:scale-[1.02] transition-transform overflow-hidden relative">
-                        <div class="absolute inset-0 flex flex-col items-center justify-center bg-slate-800/50">
-                            <i class="fas fa-bicycle text-5xl text-blue-500/30 mb-2"></i>
-                            <p class="text-xs text-slate-500 uppercase tracking-widest mono">Hardware Build</p>
-                        </div>
-                        <span class="absolute bottom-4 right-4 bg-black/60 px-2 py-1 rounded text-xs mono">Oct 2024 - May 2025</span>
-                    </div>
-                    <div class="flex gap-2 mb-3">
-                        <span class="px-3 py-1 bg-blue-500/10 text-blue-400 text-xs rounded-full mono">E-Mobility</span>
-                        <span class="px-3 py-1 bg-blue-500/10 text-blue-400 text-xs rounded-full mono">Battery Design</span>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-4 group-hover:text-blue-400 transition-colors">Electric Bike Conversions</h3>
-                    <p class="text-slate-400 mb-6 leading-relaxed">
-                        Converted mountain and road bikes to electric power. Designed and built custom battery packs safely while maintaining a strict $250 budget through cost-effective hardware sourcing.
-                    </p>
-                    <div class="flex gap-4">
-                        <span class="text-xs text-slate-500 italic">Power Systems | Resource Optimization | DIY Electronics</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Technical Skills -->
-    <section class="py-20 bg-slate-900/30">
-        <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-8">
-            <div class="glass p-8 rounded-2xl">
-                <i class="fas fa-cube text-3xl text-blue-500 mb-6"></i>
-                <h4 class="text-lg font-bold mb-4 uppercase tracking-wider">Technical Design</h4>
-                <ul class="text-slate-400 space-y-2 mono text-sm">
-                    <li>- Fusion360</li>
-                    <li>- Blender</li>
-                    <li>- Adobe Suite</li>
-                    <li>- Davinci Resolve</li>
-                    <li>- 3D Printing</li>
-                </ul>
-            </div>
-            <div class="glass p-8 rounded-2xl">
-                <i class="fas fa-microchip text-3xl text-blue-500 mb-6"></i>
-                <h4 class="text-lg font-bold mb-4 uppercase tracking-wider">Engineering</h4>
-                <ul class="text-slate-400 space-y-2 mono text-sm">
-                    <li>- Drone Piloting (Mavic 2E)</li>
-                    <li>- Mechatronics</li>
-                    <li>- Signal Analysis</li>
-                    <li>- System Dynamics</li>
-                    <li>- Circuit Design</li>
-                </ul>
-            </div>
-            <div class="glass p-8 rounded-2xl">
-                <i class="fas fa-flask text-3xl text-blue-500 mb-6"></i>
-                <h4 class="text-lg font-bold mb-4 uppercase tracking-wider">Professional</h4>
-                <ul class="text-slate-400 space-y-2 mono text-sm">
-                    <li>- Laboratory Procedures</li>
-                    <li>- Technical Writing</li>
-                    <li>- Immunochemistry</li>
-                    <li>- Environmental Audits</li>
-                    <li>- International Experience</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer / Contact -->
-    <footer id="contact" class="pt-20 border-t border-white/5 relative flex flex-col items-center overflow-hidden">
-        <!-- Text Content -->
-        <div class="max-w-4xl mx-auto px-6 text-center relative z-10 pb-10 md:pb-32">
-            <h2 class="text-4xl font-bold mb-6">Get In Touch</h2>
-            <p class="text-slate-400 mb-10 text-lg">
-                Currently pursuing B.S. in Biomedical Engineering at UTK. Let's connect about research opportunities or engineering projects!
-            </p>
-            <div class="flex flex-col md:flex-row justify-center items-center gap-6 mb-12">
-                <a href="mailto:ethan.wheeler000@gmail.com" class="px-10 py-4 border-2 border-blue-500 text-blue-400 font-bold rounded-lg hover:bg-blue-500 hover:text-white transition-all bg-slate-900/50">
-                    Email Me
-                </a>
-                <span class="text-slate-500 mono">+1 865-599-4286</span>
-            </div>
-            <div class="flex justify-center space-x-8 text-2xl text-slate-500">
-                <a href="https://www.linkedin.com/in/ethan-wheeler-76612a250/" target="_blank" class="hover:text-blue-500 transition-colors"><i class="fab fa-linkedin"></i></a>
-                <a href="http://engineeringmarten.com" class="hover:text-blue-500 transition-colors"><i class="fas fa-globe"></i></a>
-            </div>
-            <p class="mt-20 text-slate-600 text-sm mono italic">
-                Designed & Built by Ethan Wheeler © 2026
-            </p>
-        </div>
-        
-        <!-- Background Banner -->
-        <div class="absolute bottom-0 left-0 w-full z-0 pointer-events-none opacity-80 md:opacity-100" 
-             style="transform: translateY(95px);">
-            <img src="https://AtlasTheMarten.github.io/Portfolio/Bottom banner.png" alt="Bottom Banner" class="w-full block">
+        <div class="banner">
+            <img src="assets/img/marten-banner.png" alt="" loading="lazy">
+            <p class="credit">Designed &amp; built by Ethan Wheeler © 2026</p>
         </div>
     </footer>
 
+</div>
+<script src="assets/js/dust.js"></script>
+<script src="assets/js/site.js"></script>
 </body>
 </html>
