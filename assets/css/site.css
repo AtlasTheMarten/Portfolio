@@ -230,3 +230,10 @@ h1, h2, h3 { text-wrap: balance; margin: 0; }
   .hero .wrap > div:first-child::after, .timeline::after, .contact .wrap::after, .detail-hero > div:last-child::after,
   .label::after, .hint::after, .back::after { inset: calc(var(--veil) * -1) -14px; }
 }
+
+/* Gallery figures: whole image visible (renders have mixed shapes), click opens full size */
+.gallery figure { margin: 0; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.gallery a.media { background: #1a2433; transition: border-color .3s; }
+.gallery a.media:hover { border-color: var(--hilite); }
+.gallery a.media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.gallery figcaption { font-size: 13px; color: var(--dim); }
