@@ -265,3 +265,12 @@ h1, h2, h3 { text-wrap: balance; margin: 0; }
 .poster-link small { display: block; color: var(--dim); font: 500 12px var(--mono); }
 .poster-arrow { margin-left: auto; color: var(--gold); font-size: 20px; transition: transform .2s; }
 .poster-link:hover .poster-arrow { transform: translateX(4px); }
+
+/* Research poster block + two-up galleries */
+.poster { margin-top: 48px; }
+.poster-frame { display: block; padding: 10px; max-width: 900px; margin: 0 auto; transition: border-color .3s; }
+.poster-frame:hover { border-color: var(--hilite); }
+.poster-frame img { display: block; width: 100%; border-radius: 12px; }
+.poster .hand { display: block; text-align: center; margin-top: 10px; }
+.gallery:has(> :last-child:nth-child(2)) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 760px) { .gallery:has(> :last-child:nth-child(2)) { grid-template-columns: 1fr; } }
