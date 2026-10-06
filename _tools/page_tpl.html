@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{TITLE}} | Ethan Wheeler</title>
+    <meta name="description" content="{{DESC}}">
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@500&display=swap">
+    <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+<div class="page">
+
+    <nav class="nav">
+        <div class="wrap">
+            <a class="brand" href="../index.html">Ethan Wheeler</a>
+            <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-links">Menu</button>
+            <div class="nav-links" id="nav-links">
+                <a href="../index.html#projects">Projects</a>
+                <a href="../index.html#experience">Experience</a>
+                <a href="../index.html#contact">Contact</a>
+                <a class="btn" href="../Ethan_Wheeler_Resume_SEP_2026.pdf" target="_blank" rel="noopener">Resume</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="detail">
+        <div class="wrap">
+            <a class="back" href="{{BACK_HREF}}">{{BACK_TEXT}}</a>
+
+            <div class="detail-hero">
+                {{HERO}}
+                <div>
+                    {{BADGE}}<span class="hand">{{WHEN}}</span>
+                    <h1>{{TITLE}}</h1>
+                    <p class="lede">{{LEDE}}</p>
+                    <dl class="facts">
+{{FACTS}}
+                    </dl>
+                </div>
+            </div>
+
+            <div class="write-up{{WU_CLASS}}">
+{{SECTIONS}}
+            </div>
+
+{{EXTRA}}            <div class="gallery-section">
+                <p class="label">Gallery</p>
+                <div class="gallery">
+{{GALLERY}}
+                </div>
+            </div>
+
+{{PAGER}}        </div>
+    </main>
+
+    <footer class="contact">
+        <div class="banner">
+            <img src="../assets/img/marten-banner.png" alt="" loading="lazy">
+            <p class="credit">Designed &amp; built by Ethan Wheeler © 2026</p>
+        </div>
+    </footer>
+
+</div>
+<script src="../assets/js/dust.js"></script>
+<script src="../assets/js/site.js"></script>
+</body>
+</html>
