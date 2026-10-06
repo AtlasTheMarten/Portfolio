@@ -164,11 +164,14 @@ h1, h2, h3 { text-wrap: balance; margin: 0; }
 .contact p { color: var(--dim); max-width: 52ch; margin: 0 auto 28px; }
 .contact-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
 .contact .email { display: block; margin-top: 18px; font: 500 14px var(--mono); color: var(--dim); user-select: all; }
-.banner { position: relative; margin-top: -16%; pointer-events: none; }
+.banner { --bh: 200px; position: relative; margin-top: 24px; padding-top: var(--bh); overflow: hidden; pointer-events: none;
+  /* the art's flat ground (90/480 of its height) carries on to both edges at any window width */
+  background: linear-gradient(#000, #000) 0 calc(var(--bh) * 390 / 480) / 100% calc(var(--bh) * 90 / 480 + 1px) no-repeat; }
 .detail + .contact { padding-top: 0; }
-.detail + .contact .banner { margin-top: -24%; }
-@media (max-width: 760px) { .banner, .detail + .contact .banner { margin-top: -30px; } }
-.banner img { display: block; width: 100%; max-width: none; min-height: 220px; object-fit: cover; object-position: 78% bottom; }
+.detail + .contact .banner { margin-top: 40px; }
+/* fixed size: the marten (centre at 2770 of 4320px) sits at 72% across, pulled in on narrow screens so the tail fits */
+.banner img { position: absolute; top: 0; height: var(--bh); width: auto; max-width: none;
+  left: calc(min(72%, 100% - 160px) - var(--bh) * 2770 / 480); }
 .contact .credit { max-width: none; margin: 0; padding: 4px 16px 18px; background: #000; text-align: center; font: 500 12px var(--mono); color: var(--dim); }
 
 /* ---------- Project detail pages ---------- */
