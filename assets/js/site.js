@@ -1,5 +1,10 @@
 /* Card tilt + cursor glow, and the phone menu toggle. */
 (function () {
+  // Live site = the real domain (or its github.io address). Everywhere else is the working preview,
+  // which also shows the not-yet-written placeholder sections.
+  const live = /(^|\.)engineeringmarten\.com$|\.github\.io$/i.test(location.hostname);
+  if (!live) document.documentElement.classList.add("draft");
+
   const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   document.querySelectorAll(".card").forEach(card => {
