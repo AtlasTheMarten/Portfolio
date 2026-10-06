@@ -170,7 +170,7 @@ h1, h2, h3 { text-wrap: balance; margin: 0; }
 .detail + .contact { padding-top: 0; }
 .detail + .contact .banner { margin-top: 40px; }
 /* fixed size: the marten (centre at 2770 of 4320px) sits at 72% across, pulled in on narrow screens so the tail fits */
-.banner img { position: absolute; top: 0; height: var(--bh); width: auto; max-width: none;
+.banner img { position: absolute; top: 0; height: var(--bh); width: calc(var(--bh) * 4320 / 480); max-width: none;   /* explicit width so lazy-loading kicks in */
   left: calc(min(72%, 100% - 160px) - var(--bh) * 2770 / 480); }
 .contact .credit { max-width: none; margin: 0; padding: 4px 16px 18px; background: #000; text-align: center; font: 500 12px var(--mono); color: var(--dim); }
 
