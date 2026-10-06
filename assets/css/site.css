@@ -274,3 +274,10 @@ h1, h2, h3 { text-wrap: balance; margin: 0; }
 .poster .hand { display: block; text-align: center; margin-top: 10px; }
 .gallery:has(> :last-child:nth-child(2)) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 @media (max-width: 760px) { .gallery:has(> :last-child:nth-child(2)) { grid-template-columns: 1fr; } }
+.poster-hero { margin: 0; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.detail-hero .poster-hero .media { aspect-ratio: 1; background: #1a2433; transition: border-color .3s; }
+.poster-hero .media:hover { border-color: var(--hilite); }
+.poster-hero .media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.poster-hero figcaption { text-align: center; }
+.gallery:has(> :last-child:nth-child(4)) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 760px) { .gallery:has(> :last-child:nth-child(4)) { grid-template-columns: 1fr; } }
