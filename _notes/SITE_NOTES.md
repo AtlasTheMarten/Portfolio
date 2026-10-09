@@ -13,7 +13,7 @@ Working notes for engineeringmarten.com. This folder starts with `_`, so GitHub 
 | `index.html` | Home: hero, project cards, experience, toolbox, contact + marten banner |
 | `projects/*.html` | Detail pages (generated, see below) |
 | `assets/css/site.css` | All styles and colour tokens |
-| `assets/js/dust.js` | Dust particles, only inside the footer: a slow cloud gathers and circles the marten (position read from the banner image), streams pool into unseen knots away from it; the rest of the page has none (circuit-trace experiment parked on the `dust-circuit` branch) |
+| `assets/js/dust.js` | Dust particles, only inside the footer: a slow cloud hugs and circles the marten, behind the silhouette (position read from the banner image), streams pool into unseen knots away from it; the rest of the page has none (circuit-trace experiment parked on the `dust-circuit` branch) |
 | `assets/js/site.js` | Card tilt/glow, phone menu, live-vs-working switch |
 | `assets/img/`, `assets/video/` | Media |
 | `_tools/gen_pages.py`, `_tools/page_tpl.html` | Page generator: edit the data, then `python3 _tools/gen_pages.py` |

@@ -56,9 +56,10 @@
   }
   function orbit(p) {   // join the marten's cloud from wherever the mote is now
     const ex = (p.x - M.x) / 1.55, ey = (p.y - M.y) / .75;
-    p.orb = true; p.th = Math.atan2(ey, ex); p.rad = Math.min(Math.hypot(ex, ey), M.R * 2.6);
-    p.r0 = M.R * Math.max(.9, 1.5 + gauss() * .6);
+    p.orb = true; p.th = Math.atan2(ey, ex); p.rad = Math.min(Math.hypot(ex, ey), M.R * 2);
+    p.r0 = M.R * Math.min(1.4, Math.max(.75, 1 + gauss() * .25));   // hug the marten's outline
     p.w = (Math.random() < .85 ? 1 : -1) * rnd(.0012, .0028) * Math.sqrt(M.R / p.r0);
+    p.ex = rnd(1.25, 1.75); p.ey = rnd(.5, 1); p.tilt = M.rot + gauss() * .45;   // each mote its own orbit, so they form a halo
   }
   // Knots (no drawing): points on a stream where the Dust pools and swirls for a while, then disperses.
   function newSoma(phase = 0) {
@@ -105,8 +106,8 @@
     if (p.orb) {
       p.th += p.w; p.rad += (p.r0 - p.rad) * .01;
       const wob = 1 + .12 * Math.sin(t * .0011 + p.a * 3);
-      const ex = Math.cos(p.th) * p.rad * 1.55 * wob, ey = Math.sin(p.th) * p.rad * .75 * wob;
-      const cr = Math.cos(M.rot), sr = Math.sin(M.rot);
+      const ex = Math.cos(p.th) * p.rad * p.ex * wob, ey = Math.sin(p.th) * p.rad * p.ey * wob;
+      const cr = Math.cos(p.tilt), sr = Math.sin(p.tilt);
       p.x += (M.x + ex * cr - ey * sr - p.x) * .025;                 // eased, so motes swing in rather than snap
       p.y += (M.y + ex * sr + ey * cr - p.y) * .025;
       if (Math.random() < .0006) {                                  // drift back out to rejoin the stream

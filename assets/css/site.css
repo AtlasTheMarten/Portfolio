@@ -41,8 +41,8 @@ a { color: inherit; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
 
 /* Dust lives only in the footer, fading in softly at its top edge */
-/* drawn over the marten and hills (they're black, so the motes glow against them), faded out over the credit bar */
-.dust { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none;
+/* drawn behind the marten and hills, faded out over the credit bar */
+.dust { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;
   --dust-mask: linear-gradient(transparent, #000 30%, #000 calc(100% - 62px), transparent calc(100% - 40px));
   -webkit-mask-image: var(--dust-mask); mask-image: var(--dust-mask); }
 .page { position: relative; z-index: 1; }
@@ -170,7 +170,7 @@ h1, h2, h3 { text-wrap: balance; margin: 0; }
 
 /* ---------- Contact + marten ---------- */
 .contact { position: relative; isolation: isolate; text-align: center; padding-block: 80px 0; }
-.contact > .wrap { z-index: 2; }
+.contact > .wrap, .contact > .banner { z-index: 1; }
 .contact h2 { font: 800 clamp(32px, 5vw, 44px)/1.1 var(--body); margin-bottom: 14px; }
 .contact p { color: var(--dim); max-width: 52ch; margin: 0 auto 28px; }
 .contact-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
