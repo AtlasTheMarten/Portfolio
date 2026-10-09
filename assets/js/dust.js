@@ -4,6 +4,8 @@
    - Signals: soft pulses run down a stream faster than the drift, brightening the motes they pass.
    - Somas: faint neuron cell bodies bloom on a stream, gather the Dust through them, then fade and reappear elsewhere.
    - Attention: streams bow toward the cursor and nearby motes lean in.
+   - Focus: full Dust in the hero and around the footer/marten; while reading the middle of a page it thins out,
+     dims and slows, and the somas and cursor pull fade away, so it stays in the background.
    Respects prefers-reduced-motion (draws one still frame). */
 (function () {
   const cv = document.createElement("canvas");
@@ -15,6 +17,15 @@
   const mouse = { x: 0, y: 0, on: false };
   const att = { x: 0, y: 0, k: 0 };   // eased 'attention' that drifts after the cursor and fades in/out
   const COHORTS = 6;
+  const hero = document.querySelector(".hero"), foot = document.querySelector(".contact");
+  let focus = 1, spd = 1;   // eased: 1 = hero/footer in view, 0 = reading the middle of the page
+  const clamp01 = v => Math.max(0, Math.min(1, v));
+  function focusTarget() {
+    let f = 0;
+    if (hero) f = clamp01((hero.getBoundingClientRect().bottom - H * .2) / (H * .4));
+    if (foot) f = Math.max(f, clamp01((H * .95 - foot.getBoundingClientRect().top) / (H * .45)));
+    return f;
+  }
   const rnd = (a, b) => a + Math.random() * (b - a);
   const gauss = () => (Math.random() + Math.random() + Math.random() - 1.5) / 1.5;
 
@@ -36,7 +47,7 @@
     const loose = Math.random() < .08;
     return { s: loose ? null : streams[Math.floor(Math.random() * streams.length)], c: Math.floor(Math.random() * COHORTS),
       x: anywhere ? rnd(0, W) : rnd(-40, -5), y: rnd(0, H), off: gauss(), sp: rnd(.75, 1.25), r: rnd(.3, 1.4),
-      a: rnd(0, 6.28), tw: rnd(.004, .014), carry: 0, dx: 0, dy: 0, lit: 0 };
+      a: rnd(0, 6.28), tw: rnd(.004, .014), carry: 0, dx: 0, dy: 0, lit: 0, rank: Math.random() };
   }
   // Somas: a few faint cell bodies that bloom on a stream, gather the Dust through them, then fade and reappear elsewhere.
   function newSoma(phase = 0) {
@@ -49,7 +60,8 @@
   }
   function drawSoma(n) {
     if (n.k < .01) return;
-    ctx.strokeStyle = `rgba(242, 196, 107, ${.016 * n.k})`; ctx.lineWidth = .7;
+    const k = n.k * focus; if (k < .01) return;
+    ctx.strokeStyle = `rgba(242, 196, 107, ${.016 * k})`; ctx.lineWidth = .7;
     for (const d of n.dendrites) {
       const ex = n.x + Math.cos(d.a) * d.len, ey = n.y + Math.sin(d.a) * d.len;
       const cx = n.x + Math.cos(d.a + d.bend) * d.len * .5, cy = n.y + Math.sin(d.a + d.bend) * d.len * .5;
@@ -60,7 +72,7 @@
       }
     }
     const g = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.R * .55);
-    g.addColorStop(0, `rgba(242, 196, 107, ${.018 * n.k})`); g.addColorStop(1, "rgba(242, 196, 107, 0)");
+    g.addColorStop(0, `rgba(242, 196, 107, ${.018 * k})`); g.addColorStop(1, "rgba(242, 196, 107, 0)");
     ctx.fillStyle = g; ctx.fillRect(n.x - n.R, n.y - n.R, n.R * 2, n.R * 2);
   }
   function gather(p) {
@@ -68,7 +80,7 @@
       if (n.k < .01) continue;
       const dx = p.x - n.x, dy = p.y - n.y, d = Math.hypot(dx, dy);
       if (d > n.R * 1.6) continue;
-      const w = n.k * Math.pow(Math.max(0, 1 - d / (n.R * 1.6)), 2);
+      const w = n.k * focus * Math.pow(Math.max(0, 1 - d / (n.R * 1.6)), 2);
       p.x -= p.s.speed * p.sp * .55 * w;                 // linger inside the cell body
       p.y = n.y + dy * (1 - .6 * w);                              // draw the stream in, so it swells into a bulb
       const sw = Math.sin(t * .0025 + p.a) * 7 * w;               // slow swirl around the centre
@@ -98,14 +110,14 @@
   function place(p) {
     if (p.s) {
       const s = p.s;
-      p.x += s.speed * p.sp;
+      p.x += s.speed * p.sp * spd;
       for (const q of s.pulses) { const d = p.x - q.x; if (d > -50 && d < 30) { p.x += .5; p.lit = Math.max(p.lit, 1 - Math.abs(d + 10) / 40); } }
       p.off += gauss() * .03; p.off *= .999;
       const breathe = 1 + .9 * Math.sin(p.x * .006 + t * .0003 + s.ph);
       p.carry *= .992;   // slow, graceful arc between streams
       p.y = pathY(s, p.x) + p.off * s.width * Math.max(.25, breathe) + p.carry;
     } else {
-      p.x += .16 * p.sp; p.y += Math.sin(p.x * .01 + p.a) * .12;
+      p.x += .16 * p.sp * spd; p.y += Math.sin(p.x * .01 + p.a) * .12;
     }
     if (att.k > .001) {
       const mx = att.x - (p.x + p.dx), my = att.y - (p.y + p.dy), d2 = mx * mx + my * my;
@@ -116,16 +128,20 @@
     if (p.x > W + 40) Object.assign(p, spawn(false));
   }
   function draw(p, alpha) {
+    // while reading, only ~40% of motes show, at about half brightness; they fade rather than pop
+    alpha *= clamp01((.4 + .6 * focus - p.rank) / .12) * (.5 + .5 * focus);
+    if (alpha < .01) return;
     ctx.fillStyle = `rgba(242, 196, 107, ${Math.min(1, alpha)})`;
     ctx.beginPath(); ctx.arc(p.x + p.dx, p.y + p.dy, p.r * (1 + p.lit * .6), 0, 6.283); ctx.fill();
   }
   function frame() {
-    t += 8;
+    focus += (focusTarget() - focus) * .04; spd = .55 + .45 * focus;
+    t += 8 * spd;
     for (const s of streams) {
       if (--s.nextPulse <= 0) { s.pulses.push({ x: -60, v: rnd(1.4, 2.2) }); s.nextPulse = rnd(500, 1100); }
-      s.pulses.forEach(q => q.x += q.v); s.pulses = s.pulses.filter(q => q.x < W + 80);
+      s.pulses.forEach(q => q.x += q.v * spd); s.pulses = s.pulses.filter(q => q.x < W + 80);
     }
-    if (mouse.on) { att.x += (mouse.x - att.x) * .025; att.y += (mouse.y - att.y) * .025; att.k += (1 - att.k) * .015; } else att.k *= .985;
+    if (mouse.on) { att.x += (mouse.x - att.x) * .025; att.y += (mouse.y - att.y) * .025; att.k += (focus - att.k) * .015; } else att.k *= .985;
     somas = somas.map(n => {
       n.phase += 1 / n.life; if (n.phase >= 1) return newSoma();
       n.k = Math.pow(Math.sin(Math.PI * n.phase), 2);
@@ -144,6 +160,7 @@
   addEventListener("pointermove", e => { mouse.x = e.clientX; mouse.y = e.clientY; if (att.k < .01) { att.x = mouse.x; att.y = mouse.y; } mouse.on = true; });
   document.addEventListener("pointerleave", () => { mouse.on = false; });
   addEventListener("blur", () => { mouse.on = false; });
+  if (still) { focus = focusTarget(); spd = 1; }
   if (still) parts.forEach(p => { place(p); draw(p, .5); });
   else raf = requestAnimationFrame(frame);
 })();
