@@ -1,7 +1,7 @@
 /* Dust: golden motes drifting through the footer, after the Dust in His Dark Materials.
    The canvas lives only inside the footer, so the rest of the page stays clear.
-   - Marten: Dust is drawn to the marten (a nod to a dæmon). Part of it gathers into a slow, tilted cloud that
-     circles the marten, passing behind it, while streams that come near bend in, and motes drift back out to rejoin them.
+   - Marten: Dust is drawn to the marten (a nod to a dæmon). Part of it settles into an even cloud of fine, slow motes
+     around it (behind the silhouette); streams that come near bend in, and motes drift back out to rejoin them.
    - Streams: motes flow in a few breathing, wispy ribbons across the screen.
    - Branching: now and then a small cohort peels off one stream and arcs over to join a neighbour, together.
    - Signals: soft pulses run down a stream faster than the drift, brightening the motes they pass.
@@ -27,7 +27,7 @@
   function findMarten() {
     if (!banner) return;
     const b = banner.getBoundingClientRect(), c = cv.getBoundingClientRect(), k = b.height / 480;   // art is 480px tall
-    M.x = b.left - c.left + 2790 * k; M.y = b.top - c.top + 150 * k; M.R = Math.max(40, 300 * k);
+    M.x = b.left - c.left + 2700 * k; M.y = b.top - c.top + 190 * k; M.R = Math.max(40, 300 * k);
   }
   const rnd = (a, b) => a + Math.random() * (b - a);
   const gauss = () => (Math.random() + Math.random() + Math.random() - 1.5) / 1.5;
@@ -54,12 +54,10 @@
       x: anywhere ? rnd(0, W) : rnd(-40, -5), y: rnd(0, H), off: gauss(), sp: rnd(.75, 1.25), r: rnd(.3, 1.4),
       a: rnd(0, 6.28), tw: rnd(.0015, .005), carry: 0, dx: 0, dy: 0, lit: 0, orb: false };
   }
-  function orbit(p) {   // join the marten's cloud from wherever the mote is now
-    const ex = (p.x - M.x) / 1.55, ey = (p.y - M.y) / .75;
-    p.orb = true; p.th = Math.atan2(ey, ex); p.rad = Math.min(Math.hypot(ex, ey), M.R * 2);
-    p.r0 = M.R * Math.min(1.4, Math.max(.75, 1 + gauss() * .25));   // hug the marten's outline
-    p.w = (Math.random() < .85 ? 1 : -1) * rnd(.0012, .0028) * Math.sqrt(M.R / p.r0);
-    p.ex = rnd(1.25, 1.75); p.ey = rnd(.5, 1); p.tilt = M.rot + gauss() * .45;   // each mote its own orbit, so they form a halo
+  function orbit(p) {   // join the marten's cloud: settle at a resting spot spread evenly around it, and drift there
+    const a = rnd(0, 6.283), u = Math.sqrt(Math.random());          // sqrt = even spread over the area
+    p.orb = true; p.hx = Math.cos(a) * u * 1.7; p.hy = Math.sin(a) * u;  // in units of M.R, a wide oval
+    p.th = rnd(0, 6.283); p.w = rnd(.0015, .004); p.m = rnd(4, 12);  // a slow, small meander around the spot
   }
   // Knots (no drawing): points on a stream where the Dust pools and swirls for a while, then disperses.
   function newSoma(phase = 0) {
@@ -104,12 +102,11 @@
   }
   function place(p) {
     if (p.orb) {
-      p.th += p.w; p.rad += (p.r0 - p.rad) * .01;
-      const wob = 1 + .12 * Math.sin(t * .0011 + p.a * 3);
-      const ex = Math.cos(p.th) * p.rad * p.ex * wob, ey = Math.sin(p.th) * p.rad * p.ey * wob;
-      const cr = Math.cos(p.tilt), sr = Math.sin(p.tilt);
-      p.x += (M.x + ex * cr - ey * sr - p.x) * .025;                 // eased, so motes swing in rather than snap
-      p.y += (M.y + ex * sr + ey * cr - p.y) * .025;
+      p.th += p.w;
+      const tx = M.x + p.hx * M.R + Math.cos(p.th) * p.m, ty = M.y + p.hy * M.R + Math.sin(p.th * 1.3) * p.m * .7;
+      let mx = (tx - p.x) * .012, my = (ty - p.y) * .012; const v = Math.hypot(mx, my);
+      if (v > .12) { mx *= .12 / v; my *= .12 / v; }                 // capped, so motes glide in rather than streak
+      p.x += mx; p.y += my;
       if (Math.random() < .0006) {                                  // drift back out to rejoin the stream
         const s = streams[streams.length - 1]; p.orb = false; p.s = s; p.carry = p.y - pathY(s, p.x) - p.off * s.width;
       }
@@ -131,9 +128,9 @@
     if (p.s) {
       gather(p);
       const dx = p.x - M.x, dy = p.y - M.y, d = Math.hypot(dx / 1.55, dy / .75);
-      if (d < M.R * 3) {                                         // near the marten: bend in, swirl, and maybe join its cloud
+      if (d < M.R * 3) {                                         // near the marten: slow down and maybe join its cloud
         const w = Math.pow(1 - d / (M.R * 3), 2);
-        p.y -= (dy / (d + 1)) * 6 * w; p.x -= p.s.speed * p.sp * .5 * w;
+        p.x -= p.s.speed * p.sp * .5 * w;
         if (Math.random() < .03 * w * (orbShare < ORB_SHARE ? 1.5 : .3)) orbit(p);
       }
     }
@@ -141,8 +138,9 @@
     if (p.x > W + 40 && !p.orb) Object.assign(p, spawn(false));
   }
   function draw(p, alpha) {
+    const r = p.orb ? Math.max(.45, p.r * .7) : p.r;                               // the marten's cloud is finer
     ctx.fillStyle = `rgba(242, 196, 107, ${Math.min(1, alpha)})`;
-    ctx.beginPath(); ctx.arc(p.x + p.dx, p.y + p.dy, p.r * (1 + p.lit * .6), 0, 6.283); ctx.fill();
+    ctx.beginPath(); ctx.arc(p.x + p.dx, p.y + p.dy, r * (1 + p.lit * .6), 0, 6.283); ctx.fill();
   }
   function frame() {
     t += 3.5;
