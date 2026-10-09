@@ -7,7 +7,7 @@
    - Signals: soft pulses run down a stream faster than the drift, brightening the motes they pass.
    - Knots: unseen gathering points away from the marten; a stream swells into a slow swirl there, then they fade
      and reappear elsewhere.
-   Everything moves slowly, with long soft trails.
+   Everything moves slowly; each frame is drawn fresh, with no trails.
    - Attention: streams bow toward the cursor and nearby motes lean in.
    Respects prefers-reduced-motion (draws one still frame). */
 (function () {
@@ -138,7 +138,7 @@
     if (p.x > W + 40 && !p.orb) Object.assign(p, spawn(false));
   }
   function draw(p, alpha) {
-    const r = p.orb ? Math.max(.45, p.r * .7) : p.r;                               // the marten's cloud is finer
+    const r = p.orb ? Math.max(.6, p.r * .75) : p.r;                               // the marten's cloud is finer
     ctx.fillStyle = `rgba(242, 196, 107, ${Math.min(1, alpha)})`;
     ctx.beginPath(); ctx.arc(p.x + p.dx, p.y + p.dy, r * (1 + p.lit * .6), 0, 6.283); ctx.fill();
   }
@@ -157,10 +157,9 @@
     });
     if (--nextMigrate <= 0) { migrate(); nextMigrate = rnd(240, 520); }
     findMarten(); orbShare = parts.reduce((n, p) => n + p.orb, 0) / parts.length;
-    ctx.globalCompositeOperation = "destination-out";
-    ctx.fillStyle = "rgba(0,0,0,.08)"; ctx.fillRect(0, 0, W, H);   // longer, softer trails
+    ctx.clearRect(0, 0, W, H);   // a clean frame each time: no trails, so nothing lingers as ghost lines
     ctx.globalCompositeOperation = "lighter";
-    for (const p of parts) { place(p); p.a += p.tw; draw(p, (.35 + .65 * Math.abs(Math.sin(p.a))) * .58 + p.lit * .45); }
+    for (const p of parts) { place(p); p.a += p.tw; draw(p, (.35 + .65 * Math.abs(Math.sin(p.a))) * .95 + p.lit * .5); }
     raf = requestAnimationFrame(frame);
   }
   new ResizeObserver(size).observe(cv); size();
