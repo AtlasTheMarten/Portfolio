@@ -5,8 +5,9 @@
    - Streams: motes flow in a few breathing, wispy ribbons across the screen.
    - Branching: now and then a small cohort peels off one stream and arcs over to join a neighbour, together.
    - Signals: soft pulses run down a stream faster than the drift, brightening the motes they pass.
-   - Somas: neuron cell bodies (nucleus, membrane, branching dendrites) bloom on a stream away from the marten,
-     gather the Dust through them, then fade and reappear elsewhere.
+   - Knots: unseen gathering points away from the marten; a stream swells into a slow swirl there, then they fade
+     and reappear elsewhere.
+   Everything moves slowly, with long soft trails.
    - Attention: streams bow toward the cursor and nearby motes lean in.
    Respects prefers-reduced-motion (draws one still frame). */
 (function () {
@@ -35,7 +36,7 @@
     const n = Math.max(3, Math.round(H / 380));
     streams = Array.from({ length: n }, (_, i) => ({
       i, base: (i + .5) * H / n + rnd(-50, 50), amp: Math.min(rnd(40, 100), H * .12), k: rnd(.0018, .004), ph: rnd(0, 6.28),
-      slope: rnd(-.1, .05), speed: rnd(.18, .3), width: rnd(12, 26), pulses: [], nextPulse: rnd(60, 400) }));
+      slope: rnd(-.1, .05), speed: rnd(.07, .12), width: rnd(12, 26), pulses: [], nextPulse: rnd(60, 400) }));
     const ms = streams[n - 1];                    // the lowest stream runs past the marten
     ms.slope = rnd(-.03, .03); ms.base = M.y - M.R * .4 - ms.slope * M.x;
   }
@@ -51,44 +52,20 @@
     const loose = Math.random() < .08;
     return { s: loose ? null : streams[Math.floor(Math.random() * streams.length)], c: Math.floor(Math.random() * COHORTS),
       x: anywhere ? rnd(0, W) : rnd(-40, -5), y: rnd(0, H), off: gauss(), sp: rnd(.75, 1.25), r: rnd(.3, 1.4),
-      a: rnd(0, 6.28), tw: rnd(.004, .014), carry: 0, dx: 0, dy: 0, lit: 0, orb: false };
+      a: rnd(0, 6.28), tw: rnd(.0015, .005), carry: 0, dx: 0, dy: 0, lit: 0, orb: false };
   }
   function orbit(p) {   // join the marten's cloud from wherever the mote is now
     const ex = (p.x - M.x) / 1.55, ey = (p.y - M.y) / .75;
     p.orb = true; p.th = Math.atan2(ey, ex); p.rad = Math.min(Math.hypot(ex, ey), M.R * 2.6);
     p.r0 = M.R * Math.max(.9, 1.5 + gauss() * .6);
-    p.w = (Math.random() < .85 ? 1 : -1) * rnd(.004, .009) * Math.sqrt(M.R / p.r0);
+    p.w = (Math.random() < .85 ? 1 : -1) * rnd(.0012, .0028) * Math.sqrt(M.R / p.r0);
   }
-  // Somas: a few faint cell bodies that bloom on a stream, gather the Dust through them, then fade and reappear elsewhere.
+  // Knots (no drawing): points on a stream where the Dust pools and swirls for a while, then disperses.
   function newSoma(phase = 0) {
     let s, x, tries = 0;
     do { s = streams[Math.floor(Math.random() * streams.length)]; x = rnd(W * .06, W * .94); }
-    while (Math.abs(x - M.x) < M.R * 3.2 && ++tries < 20);   // keep neurons away from the marten
-    const dendrites = Array.from({ length: Math.round(rnd(5, 8)) }, () => {
-      const a = rnd(0, 6.28), len = rnd(40, 120), bend = rnd(-.6, .6);
-      return { a, len, bend, fork: Math.random() < .5 ? rnd(.45, .75) : 0, fa: a + rnd(-.8, .8) };
-    });
-    return { s, x, y: pathY(s, x), R: rnd(60, 95), phase, life: rnd(1800, 2800), k: 0, dendrites };
-  }
-  function drawSoma(n) {
-    if (n.k < .01) return;
-    ctx.strokeStyle = `rgba(242, 196, 107, ${.03 * n.k})`; ctx.lineWidth = .9;
-    for (const d of n.dendrites) {
-      const ex = n.x + Math.cos(d.a) * d.len, ey = n.y + Math.sin(d.a) * d.len;
-      const cx = n.x + Math.cos(d.a + d.bend) * d.len * .5, cy = n.y + Math.sin(d.a + d.bend) * d.len * .5;
-      ctx.beginPath(); ctx.moveTo(n.x, n.y); ctx.quadraticCurveTo(cx, cy, ex, ey); ctx.stroke();
-      if (d.fork) {
-        const u = d.fork, v = 1 - u, fx = v * v * n.x + 2 * v * u * cx + u * u * ex, fy = v * v * n.y + 2 * v * u * cy + u * u * ey;
-        ctx.beginPath(); ctx.moveTo(fx, fy); ctx.lineTo(fx + Math.cos(d.fa) * d.len * .4, fy + Math.sin(d.fa) * d.len * .4); ctx.stroke();
-      }
-    }
-    const g = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.R * .45);
-    g.addColorStop(0, `rgba(242, 196, 107, ${.05 * n.k})`); g.addColorStop(1, "rgba(242, 196, 107, 0)");
-    ctx.fillStyle = g; ctx.fillRect(n.x - n.R, n.y - n.R, n.R * 2, n.R * 2);
-    ctx.lineWidth = 1; ctx.strokeStyle = `rgba(242, 196, 107, ${.04 * n.k})`;   // membrane and nucleus
-    ctx.beginPath(); ctx.arc(n.x, n.y, 9, 0, 6.283); ctx.stroke();
-    ctx.fillStyle = `rgba(242, 196, 107, ${.07 * n.k})`;
-    ctx.beginPath(); ctx.arc(n.x, n.y, 3.2, 0, 6.283); ctx.fill();
+    while (Math.abs(x - M.x) < M.R * 3.2 && ++tries < 20);   // keep knots away from the marten
+    return { s, x, y: pathY(s, x), R: rnd(60, 95), phase, life: rnd(2600, 4200), k: 0 };
   }
   function gather(p) {
     for (const n of somas) {
@@ -130,21 +107,21 @@
       const wob = 1 + .12 * Math.sin(t * .0011 + p.a * 3);
       const ex = Math.cos(p.th) * p.rad * 1.55 * wob, ey = Math.sin(p.th) * p.rad * .75 * wob;
       const cr = Math.cos(M.rot), sr = Math.sin(M.rot);
-      p.x += (M.x + ex * cr - ey * sr - p.x) * .06;                 // eased, so motes swing in rather than snap
-      p.y += (M.y + ex * sr + ey * cr - p.y) * .06;
-      if (Math.random() < .0012) {                                  // drift back out to rejoin the stream
+      p.x += (M.x + ex * cr - ey * sr - p.x) * .025;                 // eased, so motes swing in rather than snap
+      p.y += (M.y + ex * sr + ey * cr - p.y) * .025;
+      if (Math.random() < .0006) {                                  // drift back out to rejoin the stream
         const s = streams[streams.length - 1]; p.orb = false; p.s = s; p.carry = p.y - pathY(s, p.x) - p.off * s.width;
       }
     } else if (p.s) {
       const s = p.s;
       p.x += s.speed * p.sp;
-      for (const q of s.pulses) { const d = p.x - q.x; if (d > -50 && d < 30) { p.x += .5; p.lit = Math.max(p.lit, 1 - Math.abs(d + 10) / 40); } }
-      p.off += gauss() * .03; p.off *= .999;
+      for (const q of s.pulses) { const d = p.x - q.x; if (d > -60 && d < 40) p.lit = Math.max(p.lit, .7 * (1 - Math.abs(d + 10) / 50)); }
+      p.off += gauss() * .012; p.off *= .9995;
       const breathe = 1 + .9 * Math.sin(p.x * .006 + t * .0003 + s.ph);
-      p.carry *= .992;   // slow, graceful arc between streams
+      p.carry *= .996;   // slow, graceful arc between streams
       p.y = pathY(s, p.x) + p.off * s.width * Math.max(.25, breathe) + p.carry;
     } else {
-      p.x += .16 * p.sp; p.y += Math.sin(p.x * .01 + p.a) * .12;
+      p.x += .06 * p.sp; p.y += Math.sin(p.x * .01 + p.a) * .05;
     }
     if (att.k > .001) {
       const mx = att.x - (p.x + p.dx), my = att.y - (p.y + p.dy), d2 = mx * mx + my * my;
@@ -159,7 +136,7 @@
         if (Math.random() < .03 * w * (orbShare < ORB_SHARE ? 1.5 : .3)) orbit(p);
       }
     }
-    p.dx *= .985; p.dy *= .985; p.lit *= .95;
+    p.dx *= .99; p.dy *= .99; p.lit *= .975;
     if (p.x > W + 40 && !p.orb) Object.assign(p, spawn(false));
   }
   function draw(p, alpha) {
@@ -167,12 +144,12 @@
     ctx.beginPath(); ctx.arc(p.x + p.dx, p.y + p.dy, p.r * (1 + p.lit * .6), 0, 6.283); ctx.fill();
   }
   function frame() {
-    t += 8;
+    t += 3.5;
     for (const s of streams) {
-      if (--s.nextPulse <= 0) { s.pulses.push({ x: -60, v: rnd(1.4, 2.2) }); s.nextPulse = rnd(500, 1100); }
+      if (--s.nextPulse <= 0) { s.pulses.push({ x: -60, v: rnd(.35, .55) }); s.nextPulse = rnd(1400, 2600); }
       s.pulses.forEach(q => q.x += q.v); s.pulses = s.pulses.filter(q => q.x < W + 80);
     }
-    if (mouse.on) { att.x += (mouse.x - att.x) * .025; att.y += (mouse.y - att.y) * .025; att.k += (1 - att.k) * .015; } else att.k *= .985;
+    if (mouse.on) { att.x += (mouse.x - att.x) * .012; att.y += (mouse.y - att.y) * .012; att.k += (1 - att.k) * .008; } else att.k *= .985;
     somas = somas.map(n => {
       n.phase += 1 / n.life; if (n.phase >= 1) return newSoma();
       n.k = Math.pow(Math.sin(Math.PI * n.phase), 2);
@@ -182,9 +159,8 @@
     if (--nextMigrate <= 0) { migrate(); nextMigrate = rnd(240, 520); }
     findMarten(); orbShare = parts.reduce((n, p) => n + p.orb, 0) / parts.length;
     ctx.globalCompositeOperation = "destination-out";
-    ctx.fillStyle = "rgba(0,0,0,.14)"; ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = "rgba(0,0,0,.08)"; ctx.fillRect(0, 0, W, H);   // longer, softer trails
     ctx.globalCompositeOperation = "lighter";
-    somas.forEach(drawSoma);
     for (const p of parts) { place(p); p.a += p.tw; draw(p, (.35 + .65 * Math.abs(Math.sin(p.a))) * .58 + p.lit * .45); }
     raf = requestAnimationFrame(frame);
   }
