@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Motion-Tracked Third Arm | Ethan Wheeler</title>
-    <meta name="description" content="A wearable, motion-tracked robotic third arm driven by teleoperation.">
+    <meta name="description" content="A wearable, backpack-mounted 5-axis robotic arm that copies the wearer's arm in real time.">
     <link rel="icon" type="image/png" href="../assets/img/favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,21 +35,22 @@
                 <div class="media"><iframe src="https://www.youtube.com/embed/BMUnyKhH5vU" title="Walking with the third arm on" style="width:100%;height:100%;border:0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe></div>
                 <div>
                     <span class="badge " style="position:relative;top:auto;left:auto;display:inline-block;transform:none;margin:0 10px 12px 0">Currently building</span>
-                    <span class="hand">2026 – now</span>
+                    <span class="hand">May 2026 – now</span>
                     <h1>Motion-Tracked Third Arm</h1>
-                    <p class="lede">A wearable robotic third arm that follows tracked motion through teleoperation. In the video I'm wearing it and walking around with it on.</p>
+                    <p class="lede">A 6.85 kg, backpack-mounted, 5-axis robotic arm that copies my arm's motion in real time. I demonstrated it live, worn and working, at the UTK Engineering Expo in September 2026. In the video I'm walking around with it on.</p>
                     <dl class="facts">
-                        <dt>Status</dt><dd>Wearable prototype, in progress</dd>
-                        <dt>Tools</dt><dd>Fusion 360, simulation</dd>
-                        <dt>Skills</dt><dd>Robotics, teleoperation, mechanism design</dd>
+                        <dt>Status</dt><dd>Wearable prototype, demoed live at the UTK Engineering Expo (Sept 2026)</dd>
+                        <dt>Hardware</dt><dd>5 brushless motors on FOC controllers and a CAN bus, 36 V packs I built, 4 IMU trackers</dd>
+                        <dt>Tools</dt><dd>Fusion 360, carbon fiber, 3D printing</dd>
+                        <dt>Skills</dt><dd>Mechanism design, motor control, wearable robotics</dd>
                     </dl>
                 </div>
             </div>
 
-            <div class="write-up all-placeholder">
-                <div class="panel"><h2>The problem</h2><p><span class="placeholder">Placeholder: Ethan will write this part.</span></p></div>
-                <div class="panel"><h2>The build</h2><p><span class="placeholder">Placeholder: Ethan will write this part.</span></p></div>
-                <div class="panel"><h2>What I'm learning</h2><p><span class="placeholder">Placeholder: Ethan will write this part.</span></p></div>
+            <div class="write-up">
+                <div class="panel"><h2>The problem</h2><p>I wanted an extra arm that moves the way I move, with no joystick. That means reading where my own arm is, turning that into joint angles for an arm shaped nothing like mine, and doing it fast and safely on a machine strapped to my back.</p></div>
+                <div class="panel"><h2>The build</h2><p>An excavator-style arm: a worm drive at the base, ball screws driving the boom and elbow, and a two-motor belt and bevel differential wrist. The frame is carbon fiber tubes with aluminum collars, after I found 3D-printed PLA would creep under load. Five brushless motors run on FOC controllers over a shared CAN bus, powered by 36 V packs I built, with a hardware e-stop. Four wireless IMU trackers based on the SlimeVR design read my arm, and a three-finger gripper closes on Dyneema tendons, controlled by pressure sensors in a glove.</p></div>
+                <div class="panel"><h2>What I'm learning</h2><p>Thirteen days before the expo the base worm drive skipped teeth under load, so I cut both links from 880 to 460 mm and redesigned the worm gear, roughly halving the worst-case joint torque. Replaying recordings of my own arm offline cut the median boom error from 4.3° to 0.7° before the arm ever moved. I directed the control software, written mostly with AI coding tools, and tested every piece on the hardware: layered safety stops, stall detection and overheating protection.</p></div>
             </div>
 
             <div class="gallery-section">
@@ -66,7 +67,7 @@
 
             <nav class="pager" aria-label="More projects">
                 <a class="panel" href="ebike.html"><small>← Previous</small><span>Electric Bike Conversions</span></a>
-                <a class="panel next" href="axial-flux-motor.html"><small>Next →</small><span>Axial Flux Motor</span></a>
+                <a class="panel next" href="led-tissue-sealer.html"><small>Next →</small><span>LED Tissue Sealing Device</span></a>
             </nav>
         </div>
     </main>

@@ -23,7 +23,12 @@ Working notes for engineeringmarten.com. This folder starts with `_`, so GitHub 
 - Resume: replace both `Ethan_Wheeler_Resume_SEP_2026.pdf` and the old-URL copy `Ethan Wheeler resume feb 2026.pdf`.
 - Videos under about 20 MB can live in `assets/video/`; longer ones go on YouTube.
 
+## Content source
+- Site text follows Ethan's CV reference (Oct 2026). Don't add claims it flags as "do not claim" (e.g. the 80% overlap figure, dense cerebellum signal, any NEUROD6–seizure link). The poster image still shows its original May 2024 wording.
+- No phone number, GPA or recommenders on the site.
+
 ## To-do
-- [ ] Write-ups: third arm (3), motor (2), Resumé Arm (3), e-bike (3)
+- [ ] Review the drafted write-ups (third arm, LED tissue sealer, Resumé Arm, e-bike, Karolinska); the motor's "The build" and "What I'm learning" are still empty
+- [ ] CAD or photos for the LED tissue sealing device (placeholder for now)
 - [ ] Confirm captions: worm-gear joint drive, servo-driven gripper linkage, 12 stator coils
 - [ ] Delete the stale `redesign-soft-blueprint` branch on GitHub
