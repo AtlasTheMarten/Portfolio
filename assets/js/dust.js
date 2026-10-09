@@ -1,9 +1,12 @@
-/* Dust: golden motes drifting through the footer, around the marten, after the Dust in His Dark Materials.
-   The canvas lives inside the footer (plus a soft-faded strip above it), so the rest of the page stays clear.
+/* Dust: golden motes drifting through the footer, after the Dust in His Dark Materials.
+   The canvas lives only inside the footer, so the rest of the page stays clear.
+   - Marten: Dust is drawn to the marten (a nod to a dæmon). Part of it gathers into a slow, tilted cloud that
+     circles the marten, passing behind it, while streams that come near bend in, and motes drift back out to rejoin them.
    - Streams: motes flow in a few breathing, wispy ribbons across the screen.
    - Branching: now and then a small cohort peels off one stream and arcs over to join a neighbour, together.
    - Signals: soft pulses run down a stream faster than the drift, brightening the motes they pass.
-   - Somas: faint neuron cell bodies bloom on a stream, gather the Dust through them, then fade and reappear elsewhere.
+   - Somas: neuron cell bodies (nucleus, membrane, branching dendrites) bloom on a stream away from the marten,
+     gather the Dust through them, then fade and reappear elsewhere.
    - Attention: streams bow toward the cursor and nearby motes lean in.
    Respects prefers-reduced-motion (draws one still frame). */
 (function () {
@@ -14,10 +17,17 @@
   host.prepend(cv);
   const ctx = cv.getContext("2d");
   const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  let W = -1, H = -1, dpr = Math.min(devicePixelRatio || 1, 2), parts = [], streams = [], somas = [], raf = 0, t = 0, nextMigrate = 200;
+  let orbShare = 0, W = -1, H = -1, dpr = Math.min(devicePixelRatio || 1, 2), parts = [], streams = [], somas = [], raf = 0, t = 0, nextMigrate = 200;
   const mouse = { x: 0, y: 0, on: false };
   const att = { x: 0, y: 0, k: 0 };   // eased 'attention' that drifts after the cursor and fades in/out
-  const COHORTS = 6;
+  const COHORTS = 6, ORB_SHARE = .3;
+  const M = { x: -1e4, y: -1e4, R: 60, rot: -.22 };   // the marten: centre and size in canvas px, from the banner image
+  const banner = host.querySelector(".banner img");
+  function findMarten() {
+    if (!banner) return;
+    const b = banner.getBoundingClientRect(), c = cv.getBoundingClientRect(), k = b.height / 480;   // art is 480px tall
+    M.x = b.left - c.left + 2790 * k; M.y = b.top - c.top + 150 * k; M.R = Math.max(40, 300 * k);
+  }
   const rnd = (a, b) => a + Math.random() * (b - a);
   const gauss = () => (Math.random() + Math.random() + Math.random() - 1.5) / 1.5;
 
@@ -26,6 +36,8 @@
     streams = Array.from({ length: n }, (_, i) => ({
       i, base: (i + .5) * H / n + rnd(-50, 50), amp: Math.min(rnd(40, 100), H * .12), k: rnd(.0018, .004), ph: rnd(0, 6.28),
       slope: rnd(-.1, .05), speed: rnd(.18, .3), width: rnd(12, 26), pulses: [], nextPulse: rnd(60, 400) }));
+    const ms = streams[n - 1];                    // the lowest stream runs past the marten
+    ms.slope = rnd(-.03, .03); ms.base = M.y - M.R * .4 - ms.slope * M.x;
   }
   function pathY(s, x) {
     let y = s.base + s.slope * x + s.amp * Math.sin(x * s.k + s.ph + t * .00012) + s.amp * .4 * Math.sin(x * s.k * 2.3 + s.ph * 1.7 - t * .00008);
@@ -39,20 +51,28 @@
     const loose = Math.random() < .08;
     return { s: loose ? null : streams[Math.floor(Math.random() * streams.length)], c: Math.floor(Math.random() * COHORTS),
       x: anywhere ? rnd(0, W) : rnd(-40, -5), y: rnd(0, H), off: gauss(), sp: rnd(.75, 1.25), r: rnd(.3, 1.4),
-      a: rnd(0, 6.28), tw: rnd(.004, .014), carry: 0, dx: 0, dy: 0, lit: 0 };
+      a: rnd(0, 6.28), tw: rnd(.004, .014), carry: 0, dx: 0, dy: 0, lit: 0, orb: false };
+  }
+  function orbit(p) {   // join the marten's cloud from wherever the mote is now
+    const ex = (p.x - M.x) / 1.55, ey = (p.y - M.y) / .75;
+    p.orb = true; p.th = Math.atan2(ey, ex); p.rad = Math.min(Math.hypot(ex, ey), M.R * 2.6);
+    p.r0 = M.R * Math.max(.9, 1.5 + gauss() * .6);
+    p.w = (Math.random() < .85 ? 1 : -1) * rnd(.004, .009) * Math.sqrt(M.R / p.r0);
   }
   // Somas: a few faint cell bodies that bloom on a stream, gather the Dust through them, then fade and reappear elsewhere.
   function newSoma(phase = 0) {
-    const s = streams[Math.floor(Math.random() * streams.length)], x = rnd(W * .12, W * .88);
+    let s, x, tries = 0;
+    do { s = streams[Math.floor(Math.random() * streams.length)]; x = rnd(W * .06, W * .94); }
+    while (Math.abs(x - M.x) < M.R * 3.2 && ++tries < 20);   // keep neurons away from the marten
     const dendrites = Array.from({ length: Math.round(rnd(5, 8)) }, () => {
-      const a = rnd(0, 6.28), len = rnd(35, 110), bend = rnd(-.6, .6);
+      const a = rnd(0, 6.28), len = rnd(40, 120), bend = rnd(-.6, .6);
       return { a, len, bend, fork: Math.random() < .5 ? rnd(.45, .75) : 0, fa: a + rnd(-.8, .8) };
     });
     return { s, x, y: pathY(s, x), R: rnd(60, 95), phase, life: rnd(1800, 2800), k: 0, dendrites };
   }
   function drawSoma(n) {
     if (n.k < .01) return;
-    ctx.strokeStyle = `rgba(242, 196, 107, ${.016 * n.k})`; ctx.lineWidth = .7;
+    ctx.strokeStyle = `rgba(242, 196, 107, ${.03 * n.k})`; ctx.lineWidth = .9;
     for (const d of n.dendrites) {
       const ex = n.x + Math.cos(d.a) * d.len, ey = n.y + Math.sin(d.a) * d.len;
       const cx = n.x + Math.cos(d.a + d.bend) * d.len * .5, cy = n.y + Math.sin(d.a + d.bend) * d.len * .5;
@@ -62,9 +82,13 @@
         ctx.beginPath(); ctx.moveTo(fx, fy); ctx.lineTo(fx + Math.cos(d.fa) * d.len * .4, fy + Math.sin(d.fa) * d.len * .4); ctx.stroke();
       }
     }
-    const g = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.R * .55);
-    g.addColorStop(0, `rgba(242, 196, 107, ${.018 * n.k})`); g.addColorStop(1, "rgba(242, 196, 107, 0)");
+    const g = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.R * .45);
+    g.addColorStop(0, `rgba(242, 196, 107, ${.05 * n.k})`); g.addColorStop(1, "rgba(242, 196, 107, 0)");
     ctx.fillStyle = g; ctx.fillRect(n.x - n.R, n.y - n.R, n.R * 2, n.R * 2);
+    ctx.lineWidth = 1; ctx.strokeStyle = `rgba(242, 196, 107, ${.04 * n.k})`;   // membrane and nucleus
+    ctx.beginPath(); ctx.arc(n.x, n.y, 9, 0, 6.283); ctx.stroke();
+    ctx.fillStyle = `rgba(242, 196, 107, ${.07 * n.k})`;
+    ctx.beginPath(); ctx.arc(n.x, n.y, 3.2, 0, 6.283); ctx.fill();
   }
   function gather(p) {
     for (const n of somas) {
@@ -83,10 +107,12 @@
     W = w; H = h;
     cv.width = W * dpr; cv.height = H * dpr;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    findMarten();
     if (!rebuild) return;
     makeStreams();
     parts = Array.from({ length: Math.min(340, Math.max(160, Math.round(W * H / 4000))) }, () => spawn(true));
-    somas = Array.from({ length: Math.max(2, Math.round(H / 750)) }, () => newSoma(Math.random()));
+    parts.forEach(p => { if (Math.random() < ORB_SHARE) { p.x = M.x + rnd(-1.5, 1.5) * M.R; p.y = M.y + rnd(-.7, .7) * M.R; orbit(p); } });
+    somas = Array.from({ length: Math.max(2, Math.round(W / 520)) }, () => newSoma(Math.random()));
   }
   function migrate() {
     // one cohort, within a window of one stream, crosses to a neighbouring stream as a group
@@ -94,12 +120,22 @@
     const to = streams[from.i + (Math.random() < .5 ? -1 : 1)] || streams[from.i - 1] || streams[from.i + 1];
     if (!to) return;
     const c = Math.floor(Math.random() * COHORTS), x0 = rnd(W * .1, W * .7);
-    for (const p of parts) if (p.s === from && p.c === c && Math.abs(p.x - x0) < 180) {
+    for (const p of parts) if (!p.orb && p.s === from && p.c === c && Math.abs(p.x - x0) < 180) {
       const before = p.y; p.s = to; p.carry = before - (pathY(to, p.x) + p.off * to.width);
     }
   }
   function place(p) {
-    if (p.s) {
+    if (p.orb) {
+      p.th += p.w; p.rad += (p.r0 - p.rad) * .01;
+      const wob = 1 + .12 * Math.sin(t * .0011 + p.a * 3);
+      const ex = Math.cos(p.th) * p.rad * 1.55 * wob, ey = Math.sin(p.th) * p.rad * .75 * wob;
+      const cr = Math.cos(M.rot), sr = Math.sin(M.rot);
+      p.x += (M.x + ex * cr - ey * sr - p.x) * .06;                 // eased, so motes swing in rather than snap
+      p.y += (M.y + ex * sr + ey * cr - p.y) * .06;
+      if (Math.random() < .0012) {                                  // drift back out to rejoin the stream
+        const s = streams[streams.length - 1]; p.orb = false; p.s = s; p.carry = p.y - pathY(s, p.x) - p.off * s.width;
+      }
+    } else if (p.s) {
       const s = p.s;
       p.x += s.speed * p.sp;
       for (const q of s.pulses) { const d = p.x - q.x; if (d > -50 && d < 30) { p.x += .5; p.lit = Math.max(p.lit, 1 - Math.abs(d + 10) / 40); } }
@@ -114,9 +150,17 @@
       const mx = att.x - (p.x + p.dx), my = att.y - (p.y + p.dy), d2 = mx * mx + my * my;
       const f = .06 * att.k * Math.exp(-d2 / 25000) / Math.sqrt(d2 + 1); p.dx += mx * f; p.dy += my * f;
     }
-    if (p.s) gather(p);
+    if (p.s) {
+      gather(p);
+      const dx = p.x - M.x, dy = p.y - M.y, d = Math.hypot(dx / 1.55, dy / .75);
+      if (d < M.R * 3) {                                         // near the marten: bend in, swirl, and maybe join its cloud
+        const w = Math.pow(1 - d / (M.R * 3), 2);
+        p.y -= (dy / (d + 1)) * 6 * w; p.x -= p.s.speed * p.sp * .5 * w;
+        if (Math.random() < .03 * w * (orbShare < ORB_SHARE ? 1.5 : .3)) orbit(p);
+      }
+    }
     p.dx *= .985; p.dy *= .985; p.lit *= .95;
-    if (p.x > W + 40) Object.assign(p, spawn(false));
+    if (p.x > W + 40 && !p.orb) Object.assign(p, spawn(false));
   }
   function draw(p, alpha) {
     ctx.fillStyle = `rgba(242, 196, 107, ${Math.min(1, alpha)})`;
@@ -136,6 +180,7 @@
       return n;
     });
     if (--nextMigrate <= 0) { migrate(); nextMigrate = rnd(240, 520); }
+    findMarten(); orbShare = parts.reduce((n, p) => n + p.orb, 0) / parts.length;
     ctx.globalCompositeOperation = "destination-out";
     ctx.fillStyle = "rgba(0,0,0,.14)"; ctx.fillRect(0, 0, W, H);
     ctx.globalCompositeOperation = "lighter";

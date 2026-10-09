@@ -41,8 +41,10 @@ a { color: inherit; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
 
 /* Dust lives only in the footer, fading in softly at its top edge */
-.dust { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;
-  -webkit-mask-image: linear-gradient(transparent, #000 30%); mask-image: linear-gradient(transparent, #000 30%); }
+/* drawn over the marten and hills (they're black, so the motes glow against them), faded out over the credit bar */
+.dust { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none;
+  --dust-mask: linear-gradient(transparent, #000 30%, #000 calc(100% - 62px), transparent calc(100% - 40px));
+  -webkit-mask-image: var(--dust-mask); mask-image: var(--dust-mask); }
 .page { position: relative; z-index: 1; }
 .wrap { max-width: 1080px; margin: 0 auto; padding-inline: 20px; }
 
@@ -168,12 +170,12 @@ h1, h2, h3 { text-wrap: balance; margin: 0; }
 
 /* ---------- Contact + marten ---------- */
 .contact { position: relative; isolation: isolate; text-align: center; padding-block: 80px 0; }
-.contact > .wrap, .contact > .banner { z-index: 1; }
+.contact > .wrap { z-index: 2; }
 .contact h2 { font: 800 clamp(32px, 5vw, 44px)/1.1 var(--body); margin-bottom: 14px; }
 .contact p { color: var(--dim); max-width: 52ch; margin: 0 auto 28px; }
 .contact-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
 .contact .email { display: block; margin-top: 18px; font: 500 14px var(--mono); color: var(--dim); user-select: all; }
-.banner { --bh: 100px; position: relative; margin-top: 24px; padding-top: var(--bh); overflow: hidden; pointer-events: none;
+.banner { --bh: 100px; position: relative; margin-top: 120px; padding-top: var(--bh); overflow: hidden; pointer-events: none;
   /* the art's flat ground (90/480 of its height) carries on to both edges at any window width */
   background: linear-gradient(#000, #000) 0 calc(var(--bh) * 390 / 480) / 100% calc(var(--bh) * 90 / 480 + 1px) no-repeat; }
 .detail + .contact { padding-top: 0; }
@@ -238,7 +240,8 @@ h1, h2, h3 { text-wrap: balance; margin: 0; }
   -webkit-mask-image: var(--fade); mask-image: var(--fade);
   -webkit-mask-composite: source-in; mask-composite: intersect;
 }
-.label, .hint, .back { display: inline-block; z-index: 1; }   /* stay above a neighbouring block's veil */
+.label, .hint, .back { display: inline-block; z-index: 1; }
+.contact .wrap { max-width: 640px; --veil: 30px; }   /* a snug veil, so the Dust around the marten stays visible */   /* stay above a neighbouring block's veil */
 .page { overflow-x: clip; }
 @media (max-width: 760px) {
   .hero .wrap > div:first-child::after, .timeline::after, .contact .wrap::after, .detail-hero > div:last-child::after,
